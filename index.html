@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS × NVIDIA Bid Roster — $200M Program</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+  :root{
+    --bg: #0E1116;
+    --bg-raised: #161B22;
+    --row-alt: #131820;
+    --line: #262D38;
+    --text: #E7EBF0;
+    --text-dim: #8B96A5;
+    --aws-orange: #FF9900;
+    --nv-green: #76B900;
+    --taken-bg: rgba(118,185,0,0.07);
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 0%, rgba(255,153,0,0.06), transparent 40%),
+      radial-gradient(circle at 85% 100%, rgba(118,185,0,0.06), transparent 45%),
+      var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  .wrap{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 56px 24px 90px;
+  }
+
+  header{ margin-bottom: 40px; }
+
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .eyebrow .dot{
+    width:7px; height:7px; border-radius:50%;
+    background: var(--nv-green);
+    box-shadow: 0 0 0 3px rgba(118,185,0,0.15);
+  }
+
+  h1{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 5vw, 48px);
+    line-height: 1.08;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  h1 span.orange{ color: var(--aws-orange); }
+  h1 span.green{ color: var(--nv-green); }
+
+  .sub{
+    color: var(--text-dim);
+    font-size: 15.5px;
+    line-height: 1.6;
+    max-width: 640px;
+  }
+
+  .board-meta{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+  .meta-item{ font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
+  .meta-item b{
+    display:block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .meta-item span{ color: var(--text-dim); }
+
+  /* ===== TABLE ===== */
+  .table-shell{
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table{
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td{ overflow-wrap: break-word; }
+
+  thead th{
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+
+  tbody tr{
+    border-bottom: 1px solid var(--line);
+    transition: background 0.15s ease;
+  }
+  tbody tr:last-child{ border-bottom: none; }
+  tbody tr:nth-child(even){ background: var(--row-alt); }
+  tbody tr:hover{ background: #1B2230; }
+  tbody tr.taken{ background: var(--taken-bg); }
+  tbody tr.taken:hover{ background: rgba(118,185,0,0.11); }
+
+  td{
+    padding: 16px 18px;
+    font-size: 14px;
+    vertical-align: top;
+    color: #C6CDD6;
+  }
+
+  td.seat-num{
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--text-dim);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  td.role-cell{ white-space: nowrap; }
+  .role-icon{ margin-right: 8px; }
+  .role-title{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text);
+  }
+  .role-full{
+    display:block;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  td.name-cell{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13.5px;
+    white-space: nowrap;
+  }
+  .name-filled{ color: var(--nv-green); font-weight: 600; }
+  .name-empty{ color: var(--text-dim); font-style: italic; }
+
+  .name-field{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .name-input{
+    flex: 1;
+    min-width: 0;
+    background: #0E1116;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 7px 10px;
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .name-input::placeholder{ color: var(--text-dim); font-style: italic; }
+  .name-input:focus{ border-color: var(--nv-green); background: #10160D; }
+  .name-input.saved{ border-color: rgba(118,185,0,0.5); }
+  .name-input:disabled{
+    color: var(--nv-green);
+    background: rgba(118,185,0,0.06);
+    border-color: rgba(118,185,0,0.35);
+    -webkit-text-fill-color: var(--nv-green);
+    opacity: 1;
+  }
+
+  .confirm-btn{
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+  }
+  .confirm-btn:hover:not(:disabled){
+    border-color: var(--nv-green);
+    color: var(--nv-green);
+  }
+  .confirm-btn:disabled{
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .confirm-btn.locked{
+    background: rgba(118,185,0,0.15);
+    border-color: var(--nv-green);
+    color: var(--nv-green);
+    cursor: default;
+    opacity: 1;
+  }
+
+  .sync-note{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .sync-dot{
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--text-dim);
+  }
+  .sync-dot.ok{ background: var(--nv-green); }
+  .sync-dot.err{ background: #E5484D; }
+
+  .status{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    color: var(--text-dim);
+    white-space: nowrap;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .status.open::before{
+    content:"";
+    width:6px; height:6px; border-radius:50%;
+    background: var(--aws-orange);
+  }
+  .status.taken{
+    color: var(--nv-green);
+    border-color: rgba(118,185,0,0.5);
+    background: rgba(118,185,0,0.1);
+  }
+  .status.taken::before{ content: "✓"; font-weight: 700; }
+
+  .desc-col{ max-width: 340px; line-height: 1.5; }
+
+  footer{
+    margin-top: 40px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    color: var(--text-dim);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    display:flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .desc-short{ display: none; }
+
+  /* ===== MOBILE: same table, everything scaled down ===== */
+  @media (max-width: 760px){
+    .wrap{ padding: 32px 10px 60px; }
+
+    table{ table-layout: fixed; }
+    td.role-cell{ white-space: normal; }
+
+    h1{ font-size: clamp(22px, 7vw, 30px); }
+    .sub{ font-size: 13.5px; }
+    .board-meta{ gap: 16px; margin-top: 20px; padding-top: 16px; }
+    .meta-item b{ font-size: 17px; }
+    .meta-item{ font-size: 11px; }
+
+    .table-shell{ border-radius: 8px; }
+
+    thead th{
+      padding: 8px 6px;
+      font-size: 9px;
+      letter-spacing: 0.05em;
+    }
+    thead th:nth-child(1){ width: 8%; }
+    thead th:nth-child(2){ width: 15%; }
+    thead th:nth-child(3){ width: 30%; }
+    thead th:nth-child(4){ width: 27%; }
+    thead th:nth-child(5){ width: 20%; }
+
+    td{
+      padding: 8px 5px;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    td.seat-num{ font-size: 10.5px; }
+
+    .role-icon{ margin-right: 4px; font-size: 13px; }
+    .role-title{ font-size: 12px; }
+    .role-full{ display: none; }
+
+    .desc-col{ max-width: none; }
+    .desc-short{ display: inline; }
+    .desc-full{ display: none; }
+
+    td.name-cell{ font-size: 11px; padding-left: 4px; padding-right: 4px; }
+    .name-field{ gap: 4px; }
+    .name-input{ font-size: 11px; padding: 6px 6px; min-width: 0; }
+    .confirm-btn{ width: 24px; height: 24px; font-size: 11px; }
+
+    .status{
+      font-size: 9px;
+      padding: 3px 6px;
+      gap: 4px;
+    }
+    .status::before{ width: 5px; height: 5px; }
+  }
+
+  @media (max-width: 420px){
+    .wrap{ padding: 26px 6px 50px; }
+    td{ padding: 7px 3px; font-size: 10px; }
+    thead th{ padding: 7px 3px; font-size: 8.5px; }
+    .role-title{ font-size: 11px; }
+    .role-icon{ display: none; }
+    .desc-col{ max-width: none; }
+    .status{ font-size: 8px; padding: 2px 4px; }
+    td.seat-num, td.name-cell{ white-space: normal; }
+
+    thead th:nth-child(1){ width: 7%; }
+    thead th:nth-child(2){ width: 13%; }
+    thead th:nth-child(3){ width: 26%; }
+    thead th:nth-child(4){ width: 32%; }
+    thead th:nth-child(5){ width: 22%; }
+
+    .name-field{ flex-direction: column; align-items: stretch; gap: 4px; }
+    .name-input{ font-size: 10px; padding: 5px 5px; width: 100%; }
+    .confirm-btn{ width: 100%; height: 20px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow"><span class="dot"></span>BID PROGRAM · CONFIDENTIAL DRAFT</div>
+    <h1>AWS <span class="orange">×</span> NVIDIA<br><span class="green">$200M</span> Bid Team Roster</h1>
+    <p class="sub">Ten seats, one proposal. Each row owns a distinct pillar of the case for why NVIDIA should build its next generation of AI infrastructure on AWS.</p>
+
+    <div class="board-meta">
+      <div class="meta-item"><b>10</b><span>total seats</span></div>
+      <div class="meta-item"><b id="count-filled">1</b><span>assigned</span></div>
+      <div class="meta-item"><b id="count-open">9</b><span>open</span></div>
+      <div class="meta-item"><b>$200M</b><span>program value</span></div>
+    </div>
+    <div class="sync-note"><span class="sync-dot" id="sync-dot"></span><span id="sync-text">Connecting…</span></div>
+  </header>
+
+  <div class="table-shell">
+  <table>
+    <thead>
+      <tr>
+        <th>Seat</th>
+        <th>Role</th>
+        <th>Responsibility</th>
+        <th>Name</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="taken" data-seat="01">
+        <td class="seat-num" data-label="Seat">01</td>
+        <td class="role-cell" data-label="Role">
+          <span class="role-icon">👑</span><span class="role-title">CEO</span>
+          <span class="role-full">Chief Executive Officer</span>
+        </td>
+        <td class="desc-col" data-label="Responsibility"><span class="desc-full">Leads the entire AWS team; defines the overall vision and strategy; makes the case for why NVIDIA should choose AWS; ties every CXO's contribution into one coherent proposal; owns opening, closing and cross-functional questions.</span><span class="desc-short">Leads the team and owns the overall NVIDIA pitch.</span></td>
+        <td class="name-cell" data-label="Name"><span class="name-filled">Khush</span></td>
+        <td class="status-cell" data-label="Status"><span class="status taken" id="status-01">ASSIGNED</span></td>
+      </tr>
+
+      <tr data-seat="02">
+        <td class="seat-num" data-label="Seat">02</td>
+        <td class="role-cell" data-label="Role">
+          <span class="role-icon">💻</span><span class="role-title">CTO</span>
+          <span class="role-full">Chief Technology Officer</span>
+        </td>
+        <td class="desc-col" data-label="Responsibility"><span class="desc-full">Designs the technical solution: NVIDIA GPUs, Blackwell/Vera Rubin, AWS infrastructure, networking, AI software, scalability, performance, architecture and disaster recovery.</span><span class="desc-short">Designs the GPUs, infra and architecture.</span></td>
+        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-02" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-02" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="status-cell" data-label="Status"><span class="status open" id="status-02">OPEN</span></td>
+      </tr>
+
+      <tr data-seat="03">
+        <td class="seat-num" data-label="Seat">03</td>
+        <td class="role-cell" data-label="Role">
+          <span class="role-icon">💰</span><span class="role-title">CFO</span>
+          <span class="role-full">Chief Financial Officer</span>
+        </td>
+        <td class="desc-col" data-label="Responsibility"><span class="desc-full">Builds the $200M financial case: ROI, CAPEX vs OPEX, pricing, investment, payback period, cost savings, financial risks, taxation and financial KPIs.</span><span class="desc-short">Builds the $200M ROI and pricing case.</span></td>
+        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-03" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-03" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="status-cell" data-label="Status"><span class="status open" id="status-03">OPEN</span></td>
+      </tr>
+
+      <tr data-seat="04">
+        <td class="seat-num" data-label="Seat">04</td>
+        <td class="role-cell" data-label="Role">
+          <span class="role-icon">📢</span><span class="role-title">CMO</span>
+          <span class="role-full">Chief Marketing Officer</span>
+        </td>
+        <td class="desc-col" data-label="Responsibility"><span class="desc-full">Develops the market and competitive strategy: target industries, market sizing, customer positioning, AWS differentiation, competitors and go-to-market strategy across the required geographies.</span><span class="desc-short">Owns market positioning and go-to-market.</span></td>
+        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-04" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-04" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="status-cell" data-label="Status"><span class="status open" id="status-04">OPEN</span></td>
+      </tr>
+
+      <tr data-seat="05">
+        <td class="seat-num" data-label="Seat">05</td>
+        <td class="role-cell" data-label="Role">
+          <span class="role-icon">👥</span><span class="role-title">CHRO</span>
+          <span class="role-full">Chief Human Resources Officer</span>
+        </td>
+        <td class="desc-col" data-label="Responsibility"><span class="desc-full">Designs the people and talent strategy: hiring, AI talent, training, reskilling, retention, diversity, inclusion, leadership development and cultural alignment.</span><span class="desc-short">Owns talent, hiring and culture strategy.</span></td>
+        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-05" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-05" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="status-cell" data-label="Status"><span class="status open" id="status-05">OPEN</span></td>
+      </tr>
+
+      <tr data-seat="06">
+        <td class="seat-num" data-label="Seat">06</td>
+        <td class="role-cell" data-label="Role">
+          <span class="role-icon">🏭</span><span class="role-title">COO</span>
+          <span class="role-full">Chief Operating Officer</span>
+        </td>
+        <td class="desc-col" data-label="Responsibility"><span class="desc-full">Owns execution and operations: how AWS will actually deploy and operate the solution, supply-chain resilience, operational continuity, processes, delivery timelines and scaling operations.</span><span class="desc-short">Owns deployment, delivery and operations.</span></td>
+        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-06" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-06" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="status-cell" data-label="Status"><span class="status open" id="status-06">OPEN</span></td>
+      </tr>
+
+      <tr data-seat="07">
+        <td class="seat-num" data-label="Seat">07</td>
+        <td class="role-cell" data-label="Role">
+          <span class="role-icon">🧠</span><span class="role-title">Head of Strategy</span>
+          <span class="role-full">—</span>
+        </td>
+        <td class="desc-col" data-label="Responsibility"><span class="desc-full">Develops the long-term strategic roadmap: global expansion, diversification, partnerships, strategic priorities and how AWS can help NVIDIA strengthen its position in the global AI ecosystem.</span><span class="desc-short">Owns the long-term strategic roadmap.</span></td>
+        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-07" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-07" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="status-cell" data-label="Status"><span class="status open" id="status-07">OPEN</span></td>
+      </tr>
+
+      <tr data-seat="08">
+        <td class="seat-num" data-label="Seat">08</td>
+        <td class="role-cell" data-label="Role">
+          <span class="role-icon">🔬</span><span class="role-title">Head of R&D</span>
+          <span class="role-full">Head of Research &amp; Development</span>
+        </td>
+        <td class="desc-col" data-label="Responsibility"><span class="desc-full">Focuses on future innovation: emerging AI technologies, next-generation infrastructure, quantum-ready systems, neuromorphic computing and R&D opportunities.</span><span class="desc-short">Owns future tech and next-gen R&D.</span></td>
+        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-08" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-08" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="status-cell" data-label="Status"><span class="status open" id="status-08">OPEN</span></td>
+      </tr>
+
+      <tr data-seat="09">
+        <td class="seat-num" data-label="Seat">09</td>
+        <td class="role-cell" data-label="Role">
+          <span class="role-icon">⚖️</span><span class="role-title">Head of Legal &amp; Compliance</span>
+          <span class="role-full">—</span>
+        </td>
+        <td class="desc-col" data-label="Responsibility"><span class="desc-full">Handles legal, regulatory and compliance requirements: IP protection, GDPR, contracts, international regulations, data protection, compliance certifications and jurisdiction-specific risks.</span><span class="desc-short">Owns legal, compliance and IP risk.</span></td>
+        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-09" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-09" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="status-cell" data-label="Status"><span class="status open" id="status-09">OPEN</span></td>
+      </tr>
+
+      <tr data-seat="10">
+        <td class="seat-num" data-label="Seat">10</td>
+        <td class="role-cell" data-label="Role">
+          <span class="role-icon">🤝</span><span class="role-title">Head of CX</span>
+          <span class="role-full">Customer Experience</span>
+        </td>
+        <td class="desc-col" data-label="Responsibility"><span class="desc-full">Designs the NVIDIA/customer experience: developer platforms, APIs, SDKs, support, adoption, usability, enterprise customer relationships and improving the overall experience of NVIDIA's ecosystem.</span><span class="desc-short">Owns the developer and customer experience.</span></td>
+        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-10" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-10" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="status-cell" data-label="Status"><span class="status open" id="status-10">OPEN</span></td>
+      </tr>
+
+    </tbody>
+  </table>
+  </div>
+
+  <footer>
+    <span>AWS × NVIDIA BID PROGRAM</span>
+    <span id="footer-count">1 OF 10 SEATS FILLED</span>
+  </footer>
+
+</div>
+
+<!-- ============================================================
+     LIVE SHARED NAMES — powered by Firebase Realtime Database
+     ============================================================
+     Setup (one time, ~2 minutes, free):
+     1. Go to https://console.firebase.google.com → Create a project
+     2. In the project, go to Build → Realtime Database → Create Database
+        → start in "test mode" for now (or use the rules below)
+     3. Go to Project Settings (gear icon) → General → scroll to
+        "Your apps" → click the </> (web) icon → register app
+        → copy the firebaseConfig object it gives you
+     4. Paste that object below, replacing the placeholder one
+     5. In Realtime Database → Rules, paste this and Publish:
+        {
+          "rules": {
+            "seats": {
+              "$seat": {
+                "name": {
+                  ".read": true,
+                  ".write": true,
+                  ".validate": "newData.isString() && newData.val().length <= 40"
+                },
+                "locked": {
+                  ".read": true,
+                  ".write": true,
+                  ".validate": "newData.isBoolean()"
+                }
+              }
+            }
+          }
+        }
+        This only ever lets visitors read/write a short text string
+        and a true/false lock flag under seats/<id>/ — nothing else
+        on your database can be touched from this page.
+     6. Commit and push this file to your GitHub repo — done.
+     ============================================================ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.13.2/firebase-app-compat.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.13.2/firebase-database-compat.min.js"></script>
+<script>
+  // 👇 Replace with YOUR config from the Firebase console (step 3 above)
+  const firebaseConfig = {
+    apiKey: "AIzaSyDwmk3KK8e1qjwMI2u6XBiftv6tvZ59IaA",
+    authDomain: "nvidia-case-study.firebaseapp.com",
+    databaseURL: "https://nvidia-case-study-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "nvidia-case-study",
+    storageBucket: "nvidia-case-study.firebasestorage.app",
+    messagingSenderId: "104986261772",
+    appId: "1:104986261772:web:0f0414e62bb7e3beb93129"
+  };
+
+  const syncDot = document.getElementById('sync-dot');
+  const syncText = document.getElementById('sync-text');
+  const seats = ['02','03','04','05','06','07','08','09','10'];
+
+  function setSync(state, msg){
+    syncDot.className = 'sync-dot ' + state;
+    syncText.textContent = msg;
+  }
+
+  function updateCounts(){
+    const filled = seats.filter(s => {
+      const btn = document.getElementById('confirm-' + s);
+      return btn && btn.classList.contains('locked');
+    }).length + 1; // +1 for the fixed CEO seat
+    document.getElementById('count-filled').textContent = filled;
+    document.getElementById('count-open').textContent = 10 - filled;
+    document.getElementById('footer-count').textContent = filled + ' OF 10 SEATS FILLED';
+  }
+
+  function renderSeat(seat, data){
+    const statusEl = document.getElementById('status-' + seat);
+    const rowEl = document.querySelector('tr[data-seat="' + seat + '"]');
+    const inputEl = document.getElementById('name-' + seat);
+    const btnEl = document.getElementById('confirm-' + seat);
+    const name = (data && data.name) || '';
+    const locked = !!(data && data.locked);
+
+    if (document.activeElement !== inputEl) inputEl.value = name;
+
+    inputEl.disabled = locked;
+    btnEl.classList.toggle('locked', locked);
+    btnEl.disabled = locked || name.trim().length === 0;
+    btnEl.title = locked ? 'Name locked in' : 'Lock in this name';
+
+    if (locked){
+      statusEl.textContent = 'ASSIGNED';
+      statusEl.classList.add('taken');
+      statusEl.classList.remove('open');
+      rowEl.classList.add('taken');
+      inputEl.classList.add('saved');
+    } else {
+      statusEl.textContent = 'OPEN';
+      statusEl.classList.add('open');
+      statusEl.classList.remove('taken');
+      rowEl.classList.remove('taken');
+      inputEl.classList.remove('saved');
+    }
+    updateCounts();
+  }
+
+  try {
+    if (firebaseConfig.apiKey === "YOUR_API_KEY") {
+      // No config pasted in yet — running in local/offline mode.
+      setSync('err', 'Not connected — paste your Firebase config to go live');
+    } else {
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+
+      db.ref('.info/connected').on('value', (snap) => {
+        if (snap.val() === true) setSync('ok', 'Live — updates sync for everyone');
+        else setSync('err', 'Offline — reconnecting…');
+      });
+
+      seats.forEach((seat) => {
+        const input = document.getElementById('name-' + seat);
+        const btn = document.getElementById('confirm-' + seat);
+        const ref = db.ref('seats/' + seat);
+        let debounceTimer;
+
+        // Load + live-update from any visitor's changes
+        ref.on('value', (snap) => {
+          renderSeat(seat, snap.val());
+        });
+
+        // Save as this visitor types (debounced), only while unlocked
+        input.addEventListener('input', () => {
+          if (input.disabled) return;
+          btn.disabled = input.value.trim().length === 0;
+          clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(() => {
+            ref.child('name').set(input.value.trim());
+          }, 400);
+        });
+
+        // Enter key to lock in name
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            btn.click();
+          }
+        });
+
+        // Tick button: lock the name in permanently — no unlocking once set
+        btn.addEventListener('click', () => {
+          if (btn.disabled) return;
+          clearTimeout(debounceTimer);
+          const trimmed = input.value.trim();
+          if (!trimmed) return;
+          ref.child('name').set(trimmed)
+            .then(() => ref.child('locked').set(true))
+            .catch(err => console.error('Lock failed:', err));
+        });
+      });
+    }
+  } catch (err) {
+    setSync('err', 'Connection error — check your Firebase config');
+    console.error(err);
+  }
+
+  updateCounts();
+</script>
+</body>
+</html>
