@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Handbook — AWS × NVIDIA</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="brand"><span class="dot"></span>AWS <span class="orange">×</span> NVIDIA</a>
+  <div class="nav-links">
+    <a href="index.html">Overview</a>
+    <a href="handbook.html" class="active">Handbook</a>
+    <a href="roster.html">Team Roster</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow"><span class="dot"></span>TEAM HANDBOOK</div>
+    <h1>Everything you need,<br>before you need it</h1>
+    <p class="sub">You don't need to be an expert in every line here. You need enough to understand your role, understand the other nine, and hold your own for 90 seconds under a rapid-fire question that could come from any direction. Skim it. Open what's relevant. Come back when you need it.</p>
+  </header>
+
+  <div class="handbook-layout section">
+    <aside class="handbook-sidebar">
+      <a href="#case">The Case</a>
+      <a href="#nvidia">NVIDIA Terms</a>
+      <a href="#aws">AWS Terms</a>
+      <a href="#combo">AWS × NVIDIA</a>
+      <a href="#business">Business Terms</a>
+      <a href="#geo">Geographies</a>
+      <a href="#roles">Executive Roles</a>
+      <a href="#cross">Cross-Functional</a>
+      <a href="#model">Mental Model</a>
+      <a href="#check">Final Check</a>
+    </aside>
+
+    <div class="handbook-content">
+
+      <section id="case" class="section" style="margin-top:0;">
+        <div class="section-head">
+          <div class="section-kicker">Part I</div>
+          <h2 class="section-title">The case, in one page</h2>
+        </div>
+        <details class="acc" open>
+          <summary>What are we actually doing? <span class="chev">▸</span></summary>
+          <div class="acc-body">
+            <p class="sub" style="margin-bottom:14px;">We're role-playing as AWS, pitching a simulated $200M deal to NVIDIA. Not "AWS provides cloud" — the job is to propose a specific solution to NVIDIA's actual problems, the way a real vendor would.</p>
+            <div class="term-grid">
+              <div class="term"><dt>IT Vendor</dt><dd>A company supplying tech infrastructure, software, or services to another org. We're acting as the solution provider, not just the supplier.</dd></div>
+              <div class="term"><dt>End-to-end</dt><dd>Covering the full lifecycle — hardware → networking → compute → cloud → software → security → deployment → operations → adoption — not just one link in that chain.</dd></div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <section id="nvidia" class="section">
+        <div class="section-head">
+          <div class="section-kicker">Part II</div>
+          <h2 class="section-title">NVIDIA, decoded</h2>
+          <p class="sub">Don't think "graphics card company." Think: GPU hardware × CUDA software ecosystem × developers × enterprise applications = the actual NVIDIA moat.</p>
+        </div>
+        <details class="acc">
+          <summary>Core NVIDIA terms <span class="count">10 terms</span><span class="chev">▸</span></summary>
+          <div class="acc-body">
+            <div class="term-grid">
+              <div class="term"><dt>GPU</dt><dd>Graphics Processing Unit — built for massive parallel computation, which happens to be exactly what AI training and inference need.</dd></div>
+              <div class="term"><dt>CPU vs GPU</dt><dd>CPU: fewer, more powerful general-purpose workers. GPU: a huge number of parallel workers. Simplified, but enough to reason with.</dd></div>
+              <div class="term"><dt>AI Training</dt><dd>Teaching a model using data — the expensive, compute-heavy part of building AI.</dd></div>
+              <div class="term"><dt>AI Inference</dt><dd>Using an already-trained model to actually generate outputs. Different workload profile than training.</dd></div>
+              <div class="term"><dt>CUDA</dt><dd>NVIDIA's parallel computing platform. It's the software layer that turns raw GPUs into a developer ecosystem — a real moat beyond hardware.</dd></div>
+              <div class="term"><dt>CUDA-X</dt><dd>Libraries and tools built on top of CUDA for accelerated workloads. Extends the ecosystem outward.</dd></div>
+              <div class="term"><dt>Blackwell & Vera Rubin</dt><dd>NVIDIA's current and next-gen compute architectures. Any AWS proposal has to support today's hardware and tomorrow's.</dd></div>
+              <div class="term"><dt>NVIDIA AI Enterprise</dt><dd>Enterprise software for deploying and running AI in production — GPUs alone don't make AI usable at a company.</dd></div>
+              <div class="term"><dt>Omniverse</dt><dd>Collaborative 3D, simulation, and digital-twin workflows — AI infrastructure isn't just chatbots.</dd></div>
+              <div class="term"><dt>Riva</dt><dd>NVIDIA's conversational AI / speech tooling — another example of infrastructure becoming a real product.</dd></div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <section id="aws" class="section">
+        <div class="section-head">
+          <div class="section-kicker">Part III</div>
+          <h2 class="section-title">AWS, decoded</h2>
+        </div>
+        <details class="acc">
+          <summary>Core AWS & cloud terms <span class="count">9 terms</span><span class="chev">▸</span></summary>
+          <div class="acc-body">
+            <div class="term-grid">
+              <div class="term"><dt>AWS</dt><dd>Amazon Web Services — Amazon's cloud business: compute, storage, databases, networking, security, AI/ML, dev tools.</dd></div>
+              <div class="term"><dt>Cloud Computing</dt><dd>Using a provider's infrastructure instead of building and running everything yourself — faster, more scalable, less operational weight.</dd></div>
+              <div class="term"><dt>IaaS / PaaS / SaaS</dt><dd>IaaS = infrastructure. PaaS = a platform to build on. SaaS = ready-to-use software. Three different layers of "as a service."</dd></div>
+              <div class="term"><dt>Compute</dt><dd>The processing resources actually running the workload — for AI, that includes GPUs.</dd></div>
+              <div class="term"><dt>Storage</dt><dd>Where data, models, datasets, logs, and backups live. AI datasets can be enormous, so this matters a lot.</dd></div>
+              <div class="term"><dt>Networking</dt><dd>What connects compute resources. At scale, slow GPU-to-GPU communication kills efficiency — this is as much a networking problem as a hardware one.</dd></div>
+              <div class="term"><dt>Scalability</dt><dd>Can the system go from 100 GPUs to 1,000 to 10,000 without falling over? That's the hyperscale question.</dd></div>
+              <div class="term"><dt>High Availability</dt><dd>Designing for minimal downtime — critical when interruptions are extremely expensive.</dd></div>
+              <div class="term"><dt>Disaster Recovery</dt><dd>The plan for restoring operations after hardware failure, cyberattack, outage, or disaster.</dd></div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <section id="combo" class="section">
+        <div class="section-head">
+          <div class="section-kicker">Part IV</div>
+          <h2 class="section-title">Where AWS meets NVIDIA</h2>
+          <p class="sub">NVIDIA brings accelerated computing + AI software. AWS brings global cloud infrastructure + enterprise services + security + operations. The bid has to prove exactly where that combination creates real, measurable value — not just state that it does.</p>
+        </div>
+        <details class="acc">
+          <summary>Shared vocabulary <span class="count">6 terms</span><span class="chev">▸</span></summary>
+          <div class="acc-body">
+            <div class="term-grid">
+              <div class="term"><dt>GPU Infrastructure</dt><dd>Everything around the GPU — servers, networking, storage, power, cooling, orchestration, security. The GPU is a component; this is the ecosystem that makes it useful at scale.</dd></div>
+              <div class="term"><dt>AI Infrastructure</dt><dd>The complete technology foundation to build, train, deploy, and scale AI: compute, networking, storage, data, software, security, monitoring.</dd></div>
+              <div class="term"><dt>AI Factory</dt><dd>Data → compute → training → models → inference → applications → business value, running continuously. One of NVIDIA's stated strategic priorities.</dd></div>
+              <div class="term"><dt>Sovereign AI</dt><dd>A country or org's ability to build and run AI while controlling its own infrastructure, data, and governance — one global playbook won't fit every market.</dd></div>
+              <div class="term"><dt>Security, end to end</dt><dd>Infrastructure → network → identity → data → applications → operations. NVIDIA's IP and models are the crown jewels here.</dd></div>
+              <div class="term"><dt>Sustainability</dt><dd>Hyperscale AI eats power. Energy efficiency, cooling, and ESG aren't optional line items — they're part of the pitch.</dd></div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <section id="business" class="section">
+        <div class="section-head">
+          <div class="section-kicker">Part V</div>
+          <h2 class="section-title">The money terms</h2>
+          <p class="sub">Not just the CFO's job — everyone should be able to answer "why is this financially justified?" in one breath.</p>
+        </div>
+        <details class="acc">
+          <summary>Financial & market terms <span class="count">7 terms</span><span class="chev">▸</span></summary>
+          <div class="acc-body">
+            <div class="term-grid">
+              <div class="term"><dt>ROI</dt><dd>Return on Investment. Not "can we afford $200M" — "what measurable value does NVIDIA get back for $200M."</dd></div>
+              <div class="term"><dt>CAPEX vs OPEX</dt><dd>CAPEX: money on assets that pay off over time. OPEX: recurring cost of actually running the business.</dd></div>
+              <div class="term"><dt>TCO</dt><dd>Total Cost of Ownership — the full lifetime cost (hardware, energy, maintenance, people, downtime), not just the sticker price.</dd></div>
+              <div class="term"><dt>Payback Period</dt><dd>How long until the investment's benefits cover the initial $200M outlay.</dd></div>
+              <div class="term"><dt>Market Sizing</dt><dd>Top-down: start big (global AI spend) and narrow down. Bottom-up: units × average price. Best practice — do both and triangulate.</dd></div>
+              <div class="term"><dt>TAM / SAM / SOM</dt><dd>TAM: total market. SAM: the slice you can realistically serve. SOM: the slice you actually expect to win.</dd></div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <section id="geo" class="section">
+        <div class="section-head">
+          <div class="section-kicker">Part VI</div>
+          <h2 class="section-title">The four geographies</h2>
+          <p class="sub">Same framework every time — <b>opportunity → challenges → 3–4 solutions → impact</b> — applied separately to each market. See the <a href="index.html#geo" style="color:var(--nv-green);">overview page</a> for the one-line version of each.</p>
+        </div>
+      </section>
+
+      <section id="roles" class="section">
+        <div class="section-head">
+          <div class="section-kicker">Part VII</div>
+          <h2 class="section-title">Know your role. Know everyone else's.</h2>
+          <p class="sub">Head to the <a href="roster.html" style="color:var(--nv-green);">team roster</a> to see who's actually assigned to each seat.</p>
+        </div>
+        <div class="card-grid">
+          <div class="role-mini"><div class="rq">Why should NVIDIA choose us?</div><h4>👑 CEO</h4><p class="owns">Vision, strategy, narrative, cross-functional integration, opening + closing.</p></div>
+          <div class="role-mini"><div class="rq">How do we solve it technically?</div><h4>💻 CTO</h4><p class="owns">Architecture, GPUs, Blackwell/Vera Rubin, cloud, networking, scalability, disaster recovery.</p></div>
+          <div class="role-mini"><div class="rq">Why is $200M justified?</div><h4>💰 CFO</h4><p class="owns">ROI, CAPEX/OPEX, pricing, payback, cost savings, financial risk, KPIs.</p></div>
+          <div class="role-mini"><div class="rq">Why choose us over the alternative?</div><h4>📢 CMO</h4><p class="owns">Market sizing, positioning, competitors, industries, go-to-market.</p></div>
+          <div class="role-mini"><div class="rq">Do we have the people to execute?</div><h4>👥 CHRO</h4><p class="owns">Hiring, AI talent, reskilling, retention, leadership, culture.</p></div>
+          <div class="role-mini"><div class="rq">How do we actually execute?</div><h4>🏭 COO</h4><p class="owns">Deployment, supply chain, continuity, processes, scaling operations.</p></div>
+          <div class="role-mini"><div class="rq">Where does this go long-term?</div><h4>🧠 Head of Strategy</h4><p class="owns">Roadmap, global expansion, partnerships, diversification.</p></div>
+          <div class="role-mini"><div class="rq">Can we legally do this?</div><h4>⚖️ Head of Legal</h4><p class="owns">Contracts, IP, data protection, regulation, jurisdictional risk.</p></div>
+          <div class="role-mini"><div class="rq">What comes next?</div><h4>🔬 Head of R&D</h4><p class="owns">Emerging tech, future infrastructure, long-term research roadmap.</p></div>
+          <div class="role-mini"><div class="rq">How does the customer experience this?</div><h4>🤝 Head of CX</h4><p class="owns">Developer experience, APIs/SDKs, support, adoption, relationships.</p></div>
+        </div>
+      </section>
+
+      <section id="cross" class="section">
+        <div class="section-head">
+          <div class="section-kicker">Part VIII</div>
+          <h2 class="section-title">Nobody stays in their lane</h2>
+          <p class="sub">"I'm CFO, tech isn't my problem" fails the second the rapid-fire round starts. A few examples of the cross-checks you should be ready for:</p>
+        </div>
+        <div class="term-grid">
+          <div class="term"><dt>CFO should know</dt><dd>Why does the CTO's architecture choice affect cost?</dd></div>
+          <div class="term"><dt>CTO should know</dt><dd>Why does my architecture affect ROI?</dd></div>
+          <div class="term"><dt>CMO should know</dt><dd>How does the technology itself create a customer advantage?</dd></div>
+          <div class="term"><dt>CHRO should know</dt><dd>How does talent availability affect execution and returns?</dd></div>
+          <div class="term"><dt>Legal should know</dt><dd>How do regulations shape what the technical architecture can even do?</dd></div>
+          <div class="term"><dt>CEO should know</dt><dd>All of the above, at once, and how to connect them into one story.</dd></div>
+        </div>
+      </section>
+
+      <section id="model" class="section">
+        <div class="section-head">
+          <div class="section-kicker">Part IX</div>
+          <h2 class="section-title">The mental model for any question</h2>
+        </div>
+        <div class="flow-list">
+          <div class="flow-step"><span class="fn">01</span><span class="ft">What is NVIDIA's problem?</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><span class="fn">02</span><span class="ft">Why does it matter?</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><span class="fn">03</span><span class="ft">What can AWS do about it?</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><span class="fn">04</span><span class="ft">Why is this technically viable?</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><span class="fn">05</span><span class="ft">What does it cost?</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><span class="fn">06</span><span class="ft">What value does NVIDIA get?</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><span class="fn">07</span><span class="ft">What risks exist?</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><span class="fn">08</span><span class="ft">How do we mitigate them?</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><span class="fn">09</span><span class="ft">Why AWS over the alternative?</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step"><span class="fn">10</span><span class="ft">What's the long-term impact?</span></div>
+        </div>
+        <p class="sub" style="margin-top: 20px;"><b style="color:var(--text);">Understand → Structure → Answer → Defend.</b> Not memorize → panic → forget. 90 seconds per question, and it can come from any direction.</p>
+      </section>
+
+      <section id="check" class="section">
+        <div class="section-head">
+          <div class="section-kicker">Part X</div>
+          <h2 class="section-title">Final check before you're "ready"</h2>
+          <p class="sub">If you can't answer these without searching, that's the next thing to fix — not the advanced material.</p>
+        </div>
+        <ul class="check-list" id="checklist">
+          <li><input type="checkbox"><span>What is NVIDIA?</span></li>
+          <li><input type="checkbox"><span>What is AWS?</span></li>
+          <li><input type="checkbox"><span>What is a GPU?</span></li>
+          <li><input type="checkbox"><span>CPU vs GPU?</span></li>
+          <li><input type="checkbox"><span>What is AI training?</span></li>
+          <li><input type="checkbox"><span>What is AI inference?</span></li>
+          <li><input type="checkbox"><span>What is CUDA?</span></li>
+          <li><input type="checkbox"><span>What is CUDA-X?</span></li>
+          <li><input type="checkbox"><span>What is Blackwell?</span></li>
+          <li><input type="checkbox"><span>What is Vera Rubin?</span></li>
+          <li><input type="checkbox"><span>What is AI infrastructure?</span></li>
+          <li><input type="checkbox"><span>What is an AI factory?</span></li>
+          <li><input type="checkbox"><span>What is sovereign AI?</span></li>
+          <li><input type="checkbox"><span>What does end-to-end mean here?</span></li>
+          <li><input type="checkbox"><span>Why does networking matter for GPUs?</span></li>
+          <li><input type="checkbox"><span>What is cloud computing?</span></li>
+          <li><input type="checkbox"><span>IaaS vs PaaS vs SaaS?</span></li>
+          <li><input type="checkbox"><span>What is scalability?</span></li>
+          <li><input type="checkbox"><span>What is high availability?</span></li>
+          <li><input type="checkbox"><span>What is disaster recovery?</span></li>
+          <li><input type="checkbox"><span>What does cybersecurity cover here?</span></li>
+          <li><input type="checkbox"><span>Why does sustainability matter?</span></li>
+          <li><input type="checkbox"><span>What is ROI?</span></li>
+          <li><input type="checkbox"><span>CAPEX vs OPEX?</span></li>
+          <li><input type="checkbox"><span>What is TCO?</span></li>
+          <li><input type="checkbox"><span>What is payback period?</span></li>
+          <li><input type="checkbox"><span>What are TAM / SAM / SOM?</span></li>
+          <li><input type="checkbox"><span>What are the four priority geographies?</span></li>
+          <li><input type="checkbox"><span>Why does NVIDIA need more than hardware?</span></li>
+          <li><input type="checkbox"><span><b>Why should NVIDIA choose AWS?</b></span></li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <span>AWS × NVIDIA BID PROGRAM</span>
+  <span>TEAM HANDBOOK</span>
+</footer>
+
+<script>
+  // Personal read-progress checklist — saved only on this device, not shared.
+  const KEY = 'nvidia-bid-handbook-checklist';
+  const boxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY) || '[]');
+    boxes.forEach((b, i) => { if (saved.includes(i)) { b.checked = true; b.closest('li').classList.add('checked-label'); } });
+  } catch(e) {}
+
+  boxes.forEach((b, i) => {
+    b.addEventListener('change', () => {
+      b.closest('li').classList.toggle('checked-label', b.checked);
+      try {
+        const saved = new Set(JSON.parse(localStorage.getItem(KEY) || '[]'));
+        b.checked ? saved.add(i) : saved.delete(i);
+        localStorage.setItem(KEY, JSON.stringify([...saved]));
+      } catch(e) {}
+    });
+  });
+</script>
+
+</body>
+</html>
