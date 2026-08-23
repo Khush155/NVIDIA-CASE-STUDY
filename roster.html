@@ -96,9 +96,9 @@
 
   /* ===== TABLE ===== */
   .table-shell{
-    background: var(--bg-raised);
-    border: 1px solid var(--line);
-    border-radius: 12px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -223,11 +223,7 @@
     cursor: not-allowed;
   }
   .confirm-btn.locked{
-    background: rgba(118,185,0,0.15);
-    border-color: var(--nv-green);
-    color: var(--nv-green);
-    cursor: default;
-    opacity: 1;
+    display: none !important;
   }
 
   .sync-note{
@@ -336,11 +332,13 @@
     .confirm-btn{ width: 24px; height: 24px; font-size: 11px; }
 
     .status{
-      font-size: 9px;
-      padding: 3px 6px;
-      gap: 4px;
+      font-size: 8px;
+      padding: 2px 5px;
+      letter-spacing: 0.04em;
+      gap: 3px;
     }
-    .status::before{ width: 5px; height: 5px; }
+    .status::before{ width: 4px; height: 4px; }
+    .status.taken::before{ display: none; content: ""; }
   }
 
   @media (max-width: 420px){
@@ -350,7 +348,7 @@
     .role-title{ font-size: 11px; }
     .role-icon{ display: none; }
     .desc-col{ max-width: none; }
-    .status{ font-size: 8px; padding: 2px 4px; }
+    .status{ font-size: 7px; padding: 1px 3px; letter-spacing: 0.02em; }
     td.seat-num, td.name-cell{ white-space: normal; }
 
     thead th:nth-child(1){ width: 7%; }
@@ -606,6 +604,7 @@
 
     inputEl.disabled = locked;
     btnEl.classList.toggle('locked', locked);
+    btnEl.style.display = locked ? 'none' : 'flex';
     btnEl.disabled = locked || name.trim().length === 0;
     btnEl.title = locked ? 'Name locked in' : 'Lock in this name';
 

@@ -582,9 +582,9 @@ details.acc summary .count{
 .meta-item span{ color: var(--text-dim); }
 
 .table-shell{
-  background: var(--bg-raised);
-  border: 1px solid var(--line);
-  border-radius: 12px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -709,11 +709,7 @@ td.name-cell{
   cursor: not-allowed;
 }
 .confirm-btn.locked{
-  background: rgba(118,185,0,0.15);
-  border-color: var(--nv-green);
-  color: var(--nv-green);
-  cursor: default;
-  opacity: 1;
+  display: none !important;
 }
 
 .sync-note{
@@ -781,7 +777,9 @@ td.name-cell{
   .name-field{ gap: 4px; }
   .name-input{ font-size: 11px; padding: 6px 6px; min-width: 0; }
   .confirm-btn{ width: 24px; height: 24px; font-size: 11px; }
-  .status{ font-size: 9px; padding: 3px 6px; gap: 4px; }
+  .status{ font-size: 8px; padding: 2px 5px; letter-spacing: 0.04em; gap: 3px; }
+  .status::before{ width: 4px; height: 4px; }
+  .status.taken::before{ display: none; content: ""; }
 }
 
 @media (max-width: 420px){
@@ -789,7 +787,7 @@ td.name-cell{
   thead th{ padding: 7px 3px; font-size: 8.5px; }
   .role-title{ font-size: 11px; }
   .role-icon{ display: none; }
-  .status{ font-size: 8px; padding: 2px 4px; }
+  .status{ font-size: 7px; padding: 1px 3px; letter-spacing: 0.02em; }
   td.seat-num, td.name-cell{ white-space: normal; }
   .name-field{ flex-direction: column; align-items: stretch; gap: 4px; }
   .name-input{ font-size: 10px; padding: 5px 5px; width: 100%; }
