@@ -160,7 +160,7 @@
     margin-top: 2px;
   }
 
-  td.name-cell{
+  td.name-cell, td.roll-cell{
     font-family: 'IBM Plex Mono', monospace;
     font-size: 13.5px;
     white-space: nowrap;
@@ -174,9 +174,10 @@
     gap: 6px;
   }
 
-  .name-input{
+  .name-input, .roll-input{
     flex: 1;
     min-width: 0;
+    width: 100%;
     background: #0E1116;
     border: 1px solid var(--line);
     border-radius: 6px;
@@ -187,10 +188,10 @@
     outline: none;
     transition: border-color 0.15s ease, background 0.15s ease;
   }
-  .name-input::placeholder{ color: var(--text-dim); font-style: italic; }
-  .name-input:focus{ border-color: var(--nv-green); background: #10160D; }
-  .name-input.saved{ border-color: rgba(118,185,0,0.5); }
-  .name-input:disabled{
+  .name-input::placeholder, .roll-input::placeholder{ color: var(--text-dim); font-style: italic; }
+  .name-input:focus, .roll-input:focus{ border-color: var(--nv-green); background: #10160D; }
+  .name-input.saved, .roll-input.saved{ border-color: rgba(118,185,0,0.5); }
+  .name-input:disabled, .roll-input:disabled{
     color: var(--nv-green);
     background: rgba(118,185,0,0.06);
     border-color: rgba(118,185,0,0.35);
@@ -304,14 +305,15 @@
       font-size: 9px;
       letter-spacing: 0.05em;
     }
-    thead th:nth-child(1){ width: 8%; }
-    thead th:nth-child(2){ width: 15%; }
-    thead th:nth-child(3){ width: 30%; }
-    thead th:nth-child(4){ width: 27%; }
-    thead th:nth-child(5){ width: 20%; }
+    thead th:nth-child(1){ width: 6%; }
+    thead th:nth-child(2){ width: 16%; }
+    thead th:nth-child(3){ width: 26%; }
+    thead th:nth-child(4){ width: 20%; }
+    thead th:nth-child(5){ width: 18%; }
+    thead th:nth-child(6){ width: 14%; }
 
     td{
-      padding: 8px 5px;
+      padding: 8px 4px;
       font-size: 11px;
       line-height: 1.35;
     }
@@ -326,14 +328,14 @@
     .desc-short{ display: inline; }
     .desc-full{ display: none; }
 
-    td.name-cell{ font-size: 11px; padding-left: 4px; padding-right: 4px; }
+    td.name-cell, td.roll-cell{ font-size: 11px; padding-left: 3px; padding-right: 3px; }
     .name-field{ gap: 4px; }
-    .name-input{ font-size: 11px; padding: 6px 6px; min-width: 0; }
-    .confirm-btn{ width: 24px; height: 24px; font-size: 11px; }
+    .name-input, .roll-input{ font-size: 10.5px; padding: 5px 4px; min-width: 0; }
+    .confirm-btn{ width: 22px; height: 22px; font-size: 10.5px; }
 
     .status{
       font-size: 8px;
-      padding: 2px 5px;
+      padding: 2px 4px;
       letter-spacing: 0.04em;
       gap: 3px;
     }
@@ -343,22 +345,23 @@
 
   @media (max-width: 420px){
     .wrap{ padding: 26px 6px 50px; }
-    td{ padding: 7px 3px; font-size: 10px; }
-    thead th{ padding: 7px 3px; font-size: 8.5px; }
+    td{ padding: 7px 2px; font-size: 10px; }
+    thead th{ padding: 7px 2px; font-size: 8px; }
     .role-title{ font-size: 11px; }
     .role-icon{ display: none; }
     .desc-col{ max-width: none; }
     .status{ font-size: 7px; padding: 1px 3px; letter-spacing: 0.02em; }
-    td.seat-num, td.name-cell{ white-space: normal; }
+    td.seat-num, td.name-cell, td.roll-cell{ white-space: normal; }
 
-    thead th:nth-child(1){ width: 7%; }
-    thead th:nth-child(2){ width: 13%; }
-    thead th:nth-child(3){ width: 26%; }
-    thead th:nth-child(4){ width: 32%; }
-    thead th:nth-child(5){ width: 22%; }
+    thead th:nth-child(1){ width: 6%; }
+    thead th:nth-child(2){ width: 14%; }
+    thead th:nth-child(3){ width: 24%; }
+    thead th:nth-child(4){ width: 21%; }
+    thead th:nth-child(5){ width: 21%; }
+    thead th:nth-child(6){ width: 14%; }
 
-    .name-field{ flex-direction: column; align-items: stretch; gap: 4px; }
-    .name-input{ font-size: 10px; padding: 5px 5px; width: 100%; }
+    .name-field{ flex-direction: column; align-items: stretch; gap: 3px; }
+    .name-input, .roll-input{ font-size: 9.5px; padding: 4px 3px; width: 100%; }
     .confirm-btn{ width: 100%; height: 20px; font-size: 10px; }
   }
 </style>
@@ -398,6 +401,7 @@
         <th>Role</th>
         <th>Responsibility</th>
         <th>Name</th>
+        <th>Roll No.</th>
         <th>Status</th>
       </tr>
     </thead>
@@ -411,6 +415,7 @@
         </td>
         <td class="desc-col" data-label="Responsibility"><span class="desc-full">Leads the entire AWS team; defines the overall vision and strategy; makes the case for why NVIDIA should choose AWS; ties every CXO's contribution into one coherent proposal; owns opening, closing and cross-functional questions.</span><span class="desc-short">Leads the team and owns the overall NVIDIA pitch.</span></td>
         <td class="name-cell" data-label="Name"><span class="name-filled">Khush</span></td>
+        <td class="roll-cell" data-label="Roll No."><input type="text" class="roll-input" id="roll-01" placeholder="Roll No" maxlength="20" autocomplete="off"></td>
         <td class="status-cell" data-label="Status"><span class="status taken" id="status-01">ASSIGNED</span></td>
       </tr>
 
@@ -421,7 +426,8 @@
           <span class="role-full">Chief Technology Officer</span>
         </td>
         <td class="desc-col" data-label="Responsibility"><span class="desc-full">Designs the technical solution: NVIDIA GPUs, Blackwell/Vera Rubin, AWS infrastructure, networking, AI software, scalability, performance, architecture and disaster recovery.</span><span class="desc-short">Designs the GPUs, infra and architecture.</span></td>
-        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-02" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-02" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="name-cell" data-label="Name"><input type="text" class="name-input" id="name-02" placeholder="Add name" maxlength="40" autocomplete="off"></td>
+        <td class="roll-cell" data-label="Roll No."><div class="name-field"><input type="text" class="roll-input" id="roll-02" placeholder="Roll No" maxlength="20" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-02" title="Lock in this seat" disabled>✓</button></div></td>
         <td class="status-cell" data-label="Status"><span class="status open" id="status-02">OPEN</span></td>
       </tr>
 
@@ -432,7 +438,8 @@
           <span class="role-full">Chief Financial Officer</span>
         </td>
         <td class="desc-col" data-label="Responsibility"><span class="desc-full">Builds the $200M financial case: ROI, CAPEX vs OPEX, pricing, investment, payback period, cost savings, financial risks, taxation and financial KPIs.</span><span class="desc-short">Builds the $200M ROI and pricing case.</span></td>
-        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-03" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-03" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="name-cell" data-label="Name"><input type="text" class="name-input" id="name-03" placeholder="Add name" maxlength="40" autocomplete="off"></td>
+        <td class="roll-cell" data-label="Roll No."><div class="name-field"><input type="text" class="roll-input" id="roll-03" placeholder="Roll No" maxlength="20" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-03" title="Lock in this seat" disabled>✓</button></div></td>
         <td class="status-cell" data-label="Status"><span class="status open" id="status-03">OPEN</span></td>
       </tr>
 
@@ -443,7 +450,8 @@
           <span class="role-full">Chief Marketing Officer</span>
         </td>
         <td class="desc-col" data-label="Responsibility"><span class="desc-full">Develops the market and competitive strategy: target industries, market sizing, customer positioning, AWS differentiation, competitors and go-to-market strategy across the required geographies.</span><span class="desc-short">Owns market positioning and go-to-market.</span></td>
-        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-04" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-04" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="name-cell" data-label="Name"><input type="text" class="name-input" id="name-04" placeholder="Add name" maxlength="40" autocomplete="off"></td>
+        <td class="roll-cell" data-label="Roll No."><div class="name-field"><input type="text" class="roll-input" id="roll-04" placeholder="Roll No" maxlength="20" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-04" title="Lock in this seat" disabled>✓</button></div></td>
         <td class="status-cell" data-label="Status"><span class="status open" id="status-04">OPEN</span></td>
       </tr>
 
@@ -454,7 +462,8 @@
           <span class="role-full">Chief Human Resources Officer</span>
         </td>
         <td class="desc-col" data-label="Responsibility"><span class="desc-full">Designs the people and talent strategy: hiring, AI talent, training, reskilling, retention, diversity, inclusion, leadership development and cultural alignment.</span><span class="desc-short">Owns talent, hiring and culture strategy.</span></td>
-        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-05" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-05" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="name-cell" data-label="Name"><input type="text" class="name-input" id="name-05" placeholder="Add name" maxlength="40" autocomplete="off"></td>
+        <td class="roll-cell" data-label="Roll No."><div class="name-field"><input type="text" class="roll-input" id="roll-05" placeholder="Roll No" maxlength="20" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-05" title="Lock in this seat" disabled>✓</button></div></td>
         <td class="status-cell" data-label="Status"><span class="status open" id="status-05">OPEN</span></td>
       </tr>
 
@@ -465,7 +474,8 @@
           <span class="role-full">Chief Operating Officer</span>
         </td>
         <td class="desc-col" data-label="Responsibility"><span class="desc-full">Owns execution and operations: how AWS will actually deploy and operate the solution, supply-chain resilience, operational continuity, processes, delivery timelines and scaling operations.</span><span class="desc-short">Owns deployment, delivery and operations.</span></td>
-        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-06" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-06" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="name-cell" data-label="Name"><input type="text" class="name-input" id="name-06" placeholder="Add name" maxlength="40" autocomplete="off"></td>
+        <td class="roll-cell" data-label="Roll No."><div class="name-field"><input type="text" class="roll-input" id="roll-06" placeholder="Roll No" maxlength="20" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-06" title="Lock in this seat" disabled>✓</button></div></td>
         <td class="status-cell" data-label="Status"><span class="status open" id="status-06">OPEN</span></td>
       </tr>
 
@@ -476,7 +486,8 @@
           <span class="role-full">—</span>
         </td>
         <td class="desc-col" data-label="Responsibility"><span class="desc-full">Develops the long-term strategic roadmap: global expansion, diversification, partnerships, strategic priorities and how AWS can help NVIDIA strengthen its position in the global AI ecosystem.</span><span class="desc-short">Owns the long-term strategic roadmap.</span></td>
-        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-07" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-07" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="name-cell" data-label="Name"><input type="text" class="name-input" id="name-07" placeholder="Add name" maxlength="40" autocomplete="off"></td>
+        <td class="roll-cell" data-label="Roll No."><div class="name-field"><input type="text" class="roll-input" id="roll-07" placeholder="Roll No" maxlength="20" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-07" title="Lock in this seat" disabled>✓</button></div></td>
         <td class="status-cell" data-label="Status"><span class="status open" id="status-07">OPEN</span></td>
       </tr>
 
@@ -487,7 +498,8 @@
           <span class="role-full">Head of Research &amp; Development</span>
         </td>
         <td class="desc-col" data-label="Responsibility"><span class="desc-full">Focuses on future innovation: emerging AI technologies, next-generation infrastructure, quantum-ready systems, neuromorphic computing and R&D opportunities.</span><span class="desc-short">Owns future tech and next-gen R&D.</span></td>
-        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-08" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-08" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="name-cell" data-label="Name"><input type="text" class="name-input" id="name-08" placeholder="Add name" maxlength="40" autocomplete="off"></td>
+        <td class="roll-cell" data-label="Roll No."><div class="name-field"><input type="text" class="roll-input" id="roll-08" placeholder="Roll No" maxlength="20" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-08" title="Lock in this seat" disabled>✓</button></div></td>
         <td class="status-cell" data-label="Status"><span class="status open" id="status-08">OPEN</span></td>
       </tr>
 
@@ -498,7 +510,8 @@
           <span class="role-full">—</span>
         </td>
         <td class="desc-col" data-label="Responsibility"><span class="desc-full">Handles legal, regulatory and compliance requirements: IP protection, GDPR, contracts, international regulations, data protection, compliance certifications and jurisdiction-specific risks.</span><span class="desc-short">Owns legal, compliance and IP risk.</span></td>
-        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-09" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-09" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="name-cell" data-label="Name"><input type="text" class="name-input" id="name-09" placeholder="Add name" maxlength="40" autocomplete="off"></td>
+        <td class="roll-cell" data-label="Roll No."><div class="name-field"><input type="text" class="roll-input" id="roll-09" placeholder="Roll No" maxlength="20" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-09" title="Lock in this seat" disabled>✓</button></div></td>
         <td class="status-cell" data-label="Status"><span class="status open" id="status-09">OPEN</span></td>
       </tr>
 
@@ -509,7 +522,8 @@
           <span class="role-full">Customer Experience</span>
         </td>
         <td class="desc-col" data-label="Responsibility"><span class="desc-full">Designs the NVIDIA/customer experience: developer platforms, APIs, SDKs, support, adoption, usability, enterprise customer relationships and improving the overall experience of NVIDIA's ecosystem.</span><span class="desc-short">Owns the developer and customer experience.</span></td>
-        <td class="name-cell" data-label="Name"><div class="name-field"><input type="text" class="name-input" id="name-10" placeholder="Add name" maxlength="40" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-10" title="Lock in this name" disabled>✓</button></div></td>
+        <td class="name-cell" data-label="Name"><input type="text" class="name-input" id="name-10" placeholder="Add name" maxlength="40" autocomplete="off"></td>
+        <td class="roll-cell" data-label="Roll No."><div class="name-field"><input type="text" class="roll-input" id="roll-10" placeholder="Roll No" maxlength="20" autocomplete="off"><button type="button" class="confirm-btn" id="confirm-10" title="Lock in this seat" disabled>✓</button></div></td>
         <td class="status-cell" data-label="Status"><span class="status open" id="status-10">OPEN</span></td>
       </tr>
 
@@ -576,6 +590,7 @@
   const syncDot = document.getElementById('sync-dot');
   const syncText = document.getElementById('sync-text');
   const seats = ['02','03','04','05','06','07','08','09','10'];
+  const allSeats = ['01','02','03','04','05','06','07','08','09','10'];
 
   function setSync(state, msg){
     syncDot.className = 'sync-dot ' + state;
@@ -596,37 +611,50 @@
     const statusEl = document.getElementById('status-' + seat);
     const rowEl = document.querySelector('tr[data-seat="' + seat + '"]');
     const inputEl = document.getElementById('name-' + seat);
+    const rollEl = document.getElementById('roll-' + seat);
     const btnEl = document.getElementById('confirm-' + seat);
+
     const name = (data && data.name) || '';
-    const locked = !!(data && data.locked);
+    const roll = (data && data.roll) || localStorage.getItem('roster-roll-' + seat) || '';
+    const locked = seat === '01' ? true : !!(data && data.locked);
 
-    if (document.activeElement !== inputEl) inputEl.value = name;
+    if (inputEl && document.activeElement !== inputEl) inputEl.value = name;
+    if (rollEl && document.activeElement !== rollEl) rollEl.value = roll;
 
-    inputEl.disabled = locked;
-    btnEl.classList.toggle('locked', locked);
-    btnEl.style.display = locked ? 'none' : 'flex';
-    btnEl.disabled = locked || name.trim().length === 0;
-    btnEl.title = locked ? 'Name locked in' : 'Lock in this name';
+    if (inputEl) {
+      inputEl.disabled = locked;
+      if (locked) inputEl.classList.add('saved'); else inputEl.classList.remove('saved');
+    }
+    if (rollEl) {
+      rollEl.disabled = locked;
+      if (locked) rollEl.classList.add('saved'); else rollEl.classList.remove('saved');
+    }
 
-    if (locked){
-      statusEl.textContent = 'ASSIGNED';
-      statusEl.classList.add('taken');
-      statusEl.classList.remove('open');
-      rowEl.classList.add('taken');
-      inputEl.classList.add('saved');
-    } else {
-      statusEl.textContent = 'OPEN';
-      statusEl.classList.add('open');
-      statusEl.classList.remove('taken');
-      rowEl.classList.remove('taken');
-      inputEl.classList.remove('saved');
+    if (btnEl) {
+      btnEl.classList.toggle('locked', locked);
+      btnEl.style.display = locked ? 'none' : 'flex';
+      btnEl.disabled = locked || (inputEl && inputEl.value.trim().length === 0);
+      btnEl.title = locked ? 'Seat locked in' : 'Lock in this seat';
+    }
+
+    if (statusEl) {
+      if (locked) {
+        statusEl.textContent = 'ASSIGNED';
+        statusEl.classList.add('taken');
+        statusEl.classList.remove('open');
+        if (rowEl) rowEl.classList.add('taken');
+      } else {
+        statusEl.textContent = 'OPEN';
+        statusEl.classList.add('open');
+        statusEl.classList.remove('taken');
+        if (rowEl) rowEl.classList.remove('taken');
+      }
     }
     updateCounts();
   }
 
   try {
     if (firebaseConfig.apiKey === "YOUR_API_KEY") {
-      // No config pasted in yet — running in local/offline mode.
       setSync('err', 'Not connected — paste your Firebase config to go live');
     } else {
       firebase.initializeApp(firebaseConfig);
@@ -637,8 +665,9 @@
         else setSync('err', 'Offline — reconnecting…');
       });
 
-      seats.forEach((seat) => {
+      allSeats.forEach((seat) => {
         const input = document.getElementById('name-' + seat);
+        const rollInput = document.getElementById('roll-' + seat);
         const btn = document.getElementById('confirm-' + seat);
         const ref = db.ref('seats/' + seat);
         let debounceTimer;
@@ -648,34 +677,60 @@
           renderSeat(seat, snap.val());
         });
 
-        // Save as this visitor types (debounced), only while unlocked
-        input.addEventListener('input', () => {
-          if (input.disabled) return;
-          btn.disabled = input.value.trim().length === 0;
-          clearTimeout(debounceTimer);
-          debounceTimer = setTimeout(() => {
-            ref.child('name').set(input.value.trim());
-          }, 400);
-        });
+        if (input) {
+          input.addEventListener('input', () => {
+            if (input.disabled) return;
+            if (btn) btn.disabled = input.value.trim().length === 0;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+              ref.child('name').set(input.value.trim());
+            }, 400);
+          });
 
-        // Enter key to lock in name
-        input.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            btn.click();
-          }
-        });
+          input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && btn && !btn.disabled) {
+              e.preventDefault();
+              btn.click();
+            }
+          });
+        }
 
-        // Tick button: lock the name in permanently — no unlocking once set
-        btn.addEventListener('click', () => {
-          if (btn.disabled) return;
-          clearTimeout(debounceTimer);
-          const trimmed = input.value.trim();
-          if (!trimmed) return;
-          ref.child('name').set(trimmed)
-            .then(() => ref.child('locked').set(true))
-            .catch(err => console.error('Lock failed:', err));
-        });
+        if (rollInput) {
+          rollInput.addEventListener('input', () => {
+            if (rollInput.disabled) return;
+            localStorage.setItem('roster-roll-' + seat, rollInput.value.trim());
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+              ref.child('roll').set(rollInput.value.trim()).catch(() => {});
+            }, 400);
+          });
+
+          rollInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && btn && !btn.disabled) {
+              e.preventDefault();
+              btn.click();
+            }
+          });
+        }
+
+        if (btn) {
+          btn.addEventListener('click', () => {
+            if (btn.disabled) return;
+            clearTimeout(debounceTimer);
+            const trimmedName = input ? input.value.trim() : '';
+            const trimmedRoll = rollInput ? rollInput.value.trim() : '';
+            if (!trimmedName) return;
+
+            if (trimmedRoll) localStorage.setItem('roster-roll-' + seat, trimmedRoll);
+
+            ref.child('name').set(trimmedName)
+              .then(() => {
+                if (trimmedRoll) ref.child('roll').set(trimmedRoll).catch(() => {});
+                return ref.child('locked').set(true);
+              })
+              .catch(err => console.error('Lock failed:', err));
+          });
+        }
       });
     }
   } catch (err) {
