@@ -4,7 +4,268 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AWS × NVIDIA — $200M Strategic Bid</title>
+<meta name="description" content="AWS × NVIDIA $200M Strategic Bid — the core problem, ecosystem chain, and priority geographies.">
 <link rel="stylesheet" href="styles.css">
+<style>
+/* ===== INDEX-ONLY OVERRIDES ===== */
+
+/* Stats bar beneath header */
+.hero-stats{
+  display: flex;
+  gap: 0;
+  margin-top: 40px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-raised);
+}
+.hero-stat-item{
+  flex: 1;
+  padding: 18px 22px;
+  text-align: center;
+  border-right: 1px solid var(--line);
+}
+.hero-stat-item:last-child{ border-right: none; }
+.hero-stat-item .sv{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.hero-stat-item .sv .g{ color: var(--nv-green); }
+.hero-stat-item .sv .o{ color: var(--aws-orange); }
+.hero-stat-item .sl{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Challenge cards — tighter grid */
+.challenge-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+.ch-card{
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px 20px;
+  transition: border-color 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.ch-card::before{
+  content:'';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--nv-green), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.ch-card:hover{
+  border-color: rgba(118,185,0,0.35);
+  transform: translateY(-2px);
+}
+.ch-card:hover::before{ opacity: 1; }
+.ch-num{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  color: var(--nv-green);
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.ch-card h3{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+.ch-card p{
+  font-size: 12.5px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Two flow cards side by side */
+.flow-pair{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.flow-card{
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  overflow: hidden;
+}
+.fc-tag{
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+.fc-dot{
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--nv-green);
+  box-shadow: 0 0 6px rgba(118,185,0,0.7);
+  flex-shrink: 0;
+}
+.fc-dot.o{ background: var(--aws-orange); box-shadow: 0 0 6px rgba(255,153,0,0.7); }
+.flow-card h3{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 18px;
+  line-height: 1.3;
+}
+.fc-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.fc-list li{
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 12px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: var(--text);
+  line-height: 1.35;
+  transition: border-color 0.15s;
+}
+.fc-list li:hover{ border-color: rgba(118,185,0,0.3); }
+.fc-list.o li:hover{ border-color: rgba(255,153,0,0.3); }
+.fc-bullet{
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--nv-green);
+  margin-top: 5px;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+.fc-bullet.o{ background: var(--aws-orange); }
+
+/* Geo cards */
+.geo-pair{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.geo-idx-card{
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 22px;
+  transition: border-color 0.2s;
+}
+.geo-idx-card:hover{ border-color: rgba(118,185,0,0.4); }
+.geo-flag{
+  font-size: 26px;
+  display: block;
+  margin-bottom: 10px;
+}
+.geo-idx-card h3{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 9px;
+}
+.geo-idx-card p{
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.55;
+  margin: 0 0 12px;
+}
+.geo-watch{
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  color: var(--aws-orange);
+  background: rgba(255,153,0,0.07);
+  border: 1px solid rgba(255,153,0,0.18);
+  border-radius: 7px;
+  padding: 8px 10px;
+  line-height: 1.4;
+}
+
+/* Closing CTA block */
+.closing-idx{
+  margin-top: 60px;
+  border: 1px solid rgba(118,185,0,0.3);
+  border-radius: 14px;
+  padding: 44px 40px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(118,185,0,0.06) 0%, rgba(14,17,22,0) 70%);
+  position: relative;
+  overflow: hidden;
+}
+.closing-idx::before{
+  content:'';
+  position: absolute;
+  top: -1px; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--nv-green), transparent);
+}
+.closing-idx .ck{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nv-green);
+  margin-bottom: 14px;
+}
+.closing-idx h2{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(20px, 3.5vw, 30px);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.25;
+  margin: 0 0 24px;
+  letter-spacing: -0.02em;
+}
+.closing-idx .green{ color: var(--nv-green); }
+.closing-idx .btn-row{ justify-content: center; }
+
+/* Responsive */
+@media (max-width: 768px){
+  .hero-stats{
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .hero-stat-item{
+    flex: 1 1 45%;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-stat-item:nth-child(2n){ border-right: none; }
+  .flow-pair{ grid-template-columns: 1fr; }
+  .geo-pair{ grid-template-columns: 1fr; }
+  .closing-idx{ padding: 28px 20px; }
+}
+</style>
 </head>
 <body>
 
@@ -23,6 +284,7 @@
 
 <div class="wrap">
 
+  <!-- ─── HERO (original style preserved) ─── -->
   <header>
     <div class="eyebrow"><span class="dot"></span>BID PROGRAM · CONFIDENTIAL DRAFT</div>
     <h1>A <span class="green">$200M</span> case for why<br>NVIDIA should choose <span class="orange">AWS</span></h1>
@@ -31,148 +293,176 @@
       <a href="handbook.html" class="btn btn-primary">Read Team Handbook →</a>
       <a href="roster.html" class="btn btn-secondary">See Team Roster</a>
     </div>
+
+    <!-- Stat bar -->
+    <div class="hero-stats">
+      <div class="hero-stat-item">
+        <div class="sv"><span class="g">$200M</span></div>
+        <div class="sl">Strategic Partnership</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="sv">10</div>
+        <div class="sl">Strategic Pillars</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="sv">4</div>
+        <div class="sl">Priority Markets</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="sv">6</div>
+        <div class="sl">Workstreams</div>
+      </div>
+    </div>
   </header>
 
-  <!-- Core Problem Statement -->
+  <!-- ─── CORE PROBLEM ─── -->
   <section class="section">
     <div class="section-head">
-      <div class="section-kicker">1.1 &amp; 1.2 The Core Problem</div>
+      <div class="section-kicker">§ 1.1 &amp; 1.2 — The Core Problem</div>
       <h2 class="section-title">This isn't a hardware sale — it's an ecosystem decision</h2>
       <div class="quote-block">
         "How can NVIDIA build, deploy, scale, secure, and commercialize complete AI infrastructure and software ecosystems across industries and global markets while maintaining performance, compliance, resilience, sustainability, and long-term business value?"
       </div>
+      <p class="sub" style="font-size:14px;margin-top:10px;">NVIDIA needs a partner across <strong style="color:var(--text)">10 strategic domains</strong>. Each one is a real problem our team must address with specific AWS capabilities and a defensible business case.</p>
     </div>
-
-    <div class="card-grid">
-      <div class="info-card">
-        <div class="num">01</div>
-        <h3>AI Infrastructure</h3>
-        <p>Providing scalable, high-density compute capable of supporting NVIDIA's most demanding AI training &amp; inference workloads.</p>
+    <div class="challenge-grid">
+      <div class="ch-card">
+        <div class="ch-num">01 · AI Infrastructure</div>
+        <h3>Compute at Scale</h3>
+        <p>Scalable, high-density compute supporting NVIDIA's most demanding AI training &amp; inference workloads globally.</p>
       </div>
-      <div class="info-card">
-        <div class="num">02</div>
-        <h3>Hardware + Software</h3>
-        <p>Silicon alone isn't enough. Silicon needs enterprise AI platforms, developer tools, CUDA-X, and cloud orchestration around it.</p>
+      <div class="ch-card">
+        <div class="ch-num">02 · Hardware + Software</div>
+        <h3>Beyond Silicon</h3>
+        <p>Silicon needs enterprise AI platforms, developer tools, CUDA-X, and cloud orchestration wrapped around it.</p>
       </div>
-      <div class="info-card">
-        <div class="num">03</div>
-        <h3>Cloud Integration</h3>
-        <p>Reliable compute, storage, ultra-low latency networking, and operational management at global hyperscale.</p>
+      <div class="ch-card">
+        <div class="ch-num">03 · Cloud Integration</div>
+        <h3>Global Hyperscale</h3>
+        <p>Reliable compute, storage, ultra-low latency networking, and operational management at global scale.</p>
       </div>
-      <div class="info-card">
-        <div class="num">04</div>
-        <h3>Enterprise Adoption</h3>
+      <div class="ch-card">
+        <div class="ch-num">04 · Enterprise Adoption</div>
+        <h3>Industry Deployment</h3>
         <p>Making NVIDIA technology immediately usable for enterprise clients across healthcare, finance, and manufacturing.</p>
       </div>
-      <div class="info-card">
-        <div class="num">05</div>
-        <h3>Security &amp; IP Protection</h3>
-        <p>Protecting NVIDIA's crown jewels — proprietary models, data, software, and IP — across every layer of the cloud.</p>
+      <div class="ch-card">
+        <div class="ch-num">05 · Security &amp; IP</div>
+        <h3>Crown Jewel Protection</h3>
+        <p>Protecting NVIDIA's proprietary models, data, software, and IP across every layer of the cloud stack.</p>
       </div>
-      <div class="info-card">
-        <div class="num">06</div>
-        <h3>Global Expansion</h3>
-        <p>Delivering tailored strategies across 4 priority markets: United States, China, Europe (France), and India.</p>
+      <div class="ch-card">
+        <div class="ch-num">06 · Global Expansion</div>
+        <h3>Four Priority Markets</h3>
+        <p>Tailored strategies across US, China, Europe, and India — each with distinct regulatory and market dynamics.</p>
       </div>
-      <div class="info-card">
-        <div class="num">07</div>
-        <h3>Supply-Chain Risk</h3>
-        <p>Navigating global semiconductor supply chains, geopolitical factors, and operational resilience.</p>
+      <div class="ch-card">
+        <div class="ch-num">07 · Supply-Chain Risk</div>
+        <h3>Resilient Operations</h3>
+        <p>Navigating global semiconductor supply chains, geopolitical factors, and operational continuity at scale.</p>
       </div>
-      <div class="info-card">
-        <div class="num">08</div>
-        <h3>Sustainability &amp; ESG</h3>
+      <div class="ch-card">
+        <div class="ch-num">08 · Sustainability &amp; ESG</div>
+        <h3>Green by Design</h3>
         <p>Managing high energy consumption with efficient data center design, liquid cooling, and ESG compliance.</p>
       </div>
-      <div class="info-card">
-        <div class="num">09</div>
-        <h3>Talent &amp; Capability</h3>
-        <p>Deploying specialized cloud engineers, AI experts, cybersecurity teams, and operational leadership to execute $200M.</p>
+      <div class="ch-card">
+        <div class="ch-num">09 · Talent &amp; Capability</div>
+        <h3>People Who Execute</h3>
+        <p>Cloud engineers, AI experts, cybersecurity teams, and operational leadership to execute $200M at pace.</p>
       </div>
-      <div class="info-card">
-        <div class="num">10</div>
-        <h3>Financial Value &amp; ROI</h3>
-        <p>Building a clear financial case: CAPEX vs OPEX, TCO savings, payback period, and quantifiable ROI.</p>
+      <div class="ch-card">
+        <div class="ch-num">10 · Financial Value</div>
+        <h3>Measurable ROI</h3>
+        <p>CAPEX vs OPEX trade-offs, TCO savings, payback periods, and quantifiable ROI — every number defended.</p>
       </div>
     </div>
   </section>
 
-  <!-- Ecosystem Chain -->
+  <!-- ─── TWO FLOW CHAINS ─── -->
   <section class="section">
     <div class="section-head">
-      <div class="section-kicker">1.3 What NVIDIA is looking for</div>
-      <h2 class="section-title">A complete ecosystem, not a hardware shipment</h2>
-      <p class="sub">Every layer of the proposal must connect seamlessly to the next — walking from raw silicon to long-term market dominance.</p>
+      <div class="section-kicker">§ 1.3 &amp; 1.4 — The Strategic Logic</div>
+      <h2 class="section-title">How we build the case</h2>
+      <p class="sub" style="font-size:14px;">Two chains define the approach. The ecosystem chain is what NVIDIA actually needs end-to-end. The bid logic chain is how AWS maps its capabilities to win.</p>
     </div>
-    <div class="pillar-strip">
-      <span class="pillar-chip">Hardware</span><span class="pillar-chip arrow">→</span>
-      <span class="pillar-chip">Networking</span><span class="pillar-chip arrow">→</span>
-      <span class="pillar-chip">Cloud</span><span class="pillar-chip arrow">→</span>
-      <span class="pillar-chip">Software</span><span class="pillar-chip arrow">→</span>
-      <span class="pillar-chip">Security</span><span class="pillar-chip arrow">→</span>
-      <span class="pillar-chip">Industry Apps</span><span class="pillar-chip arrow">→</span>
-      <span class="pillar-chip">Operations</span><span class="pillar-chip arrow">→</span>
-      <span class="pillar-chip">People</span><span class="pillar-chip arrow">→</span>
-      <span class="pillar-chip">Strategy</span>
+    <div class="flow-pair">
+
+      <div class="flow-card">
+        <div class="fc-tag"><span class="fc-dot"></span>Ecosystem Chain — What NVIDIA Needs</div>
+        <h3>A complete ecosystem,<br>not a hardware shipment</h3>
+        <ol class="fc-list">
+          <li><span class="fc-bullet"></span>Hardware</li>
+          <li><span class="fc-bullet"></span>Networking</li>
+          <li><span class="fc-bullet"></span>Cloud Platform</li>
+          <li><span class="fc-bullet"></span>Software &amp; AI Tools</li>
+          <li><span class="fc-bullet"></span>Security &amp; Compliance</li>
+          <li><span class="fc-bullet"></span>Industry Applications</li>
+          <li><span class="fc-bullet"></span>Operations &amp; People</li>
+          <li><span class="fc-bullet"></span>Long-Term Strategy</li>
+        </ol>
+      </div>
+
+      <div class="flow-card">
+        <div class="fc-tag"><span class="fc-dot o"></span>Bid Logic — How AWS Wins</div>
+        <h3>Mapping AWS capabilities<br>to NVIDIA's challenges</h3>
+        <ol class="fc-list o">
+          <li><span class="fc-bullet o"></span>Identify NVIDIA Challenge</li>
+          <li><span class="fc-bullet o"></span>Map AWS Capability</li>
+          <li><span class="fc-bullet o"></span>Design Proposed Solution</li>
+          <li><span class="fc-bullet o"></span>Quantify Technical Impact</li>
+          <li><span class="fc-bullet o"></span>Calculate Financial Value</li>
+          <li><span class="fc-bullet o"></span>Establish Strategic Advantage</li>
+        </ol>
+      </div>
+
     </div>
   </section>
 
-  <!-- Strategic Value Logic -->
-  <section class="section">
-    <div class="section-head">
-      <div class="section-kicker">1.4 &amp; 1.5 The AWS Strategic Value</div>
-      <h2 class="section-title">Where AWS creates strategic leverage</h2>
-      <p class="sub">We don't just say "AWS provides cloud." We map specific AWS capabilities directly to NVIDIA's core challenges.</p>
-    </div>
-    <div class="pillar-strip">
-      <span class="pillar-chip">NVIDIA Challenge</span><span class="pillar-chip arrow">↓</span>
-      <span class="pillar-chip">AWS Capability</span><span class="pillar-chip arrow">↓</span>
-      <span class="pillar-chip">Proposed Solution</span><span class="pillar-chip arrow">↓</span>
-      <span class="pillar-chip">Technical &amp; Business Impact</span><span class="pillar-chip arrow">↓</span>
-      <span class="pillar-chip">Financial Value</span><span class="pillar-chip arrow">↓</span>
-      <span class="pillar-chip">Strategic Advantage</span>
-    </div>
-  </section>
 
-  <!-- Four Geographies -->
+  <!-- ─── FOUR GEOGRAPHIES ─── -->
   <section class="section" id="geo">
     <div class="section-head">
-      <div class="section-kicker">1.6 The Four-Geography Challenge</div>
+      <div class="section-kicker">§ 1.6 — The Four-Geography Challenge</div>
       <h2 class="section-title">One framework, four priority markets</h2>
-      <p class="sub">Every market is evaluated against 4 questions: Market Opportunity, Key Challenges, Strategic Solutions, and Impact.</p>
+      <p class="sub" style="font-size:14px;">Every market is evaluated against 4 questions: Market Opportunity, Key Challenges, Strategic Solutions, and Expected Impact.</p>
     </div>
-    <div class="geo-grid">
-      <div class="geo-card">
-        <span class="flag">🇺🇸</span>
+    <div class="geo-pair">
+      <div class="geo-idx-card">
+        <span class="geo-flag">🇺🇸</span>
         <h3>United States</h3>
-        <p class="geo-line">AI leadership, hyperscale demand, and the deepest enterprise adoption curve.</p>
-        <p class="geo-line"><b>Watch for:</b> Intense competition, highly regulated federal and enterprise sectors.</p>
+        <p>AI leadership, hyperscale demand, and the deepest enterprise adoption curve globally. AWS's home turf advantage is significant.</p>
+        <div class="geo-watch">⚠ Intense competition, highly regulated federal and enterprise sectors.</div>
       </div>
-      <div class="geo-card">
-        <span class="flag">🇨🇳</span>
+      <div class="geo-idx-card">
+        <span class="geo-flag">🇨🇳</span>
         <h3>China</h3>
-        <p class="geo-line">Massive developer &amp; industrial market with distinct regulatory and compliance rules.</p>
-        <p class="geo-line"><b>Watch for:</b> Local data governance, export controls, unique local tech ecosystems.</p>
+        <p>Massive developer &amp; industrial market with distinct regulatory and compliance rules unlike any other geography.</p>
+        <div class="geo-watch">⚠ Local data governance, export controls, unique local tech ecosystems.</div>
       </div>
-      <div class="geo-card">
-        <span class="flag">🇫🇷</span>
+      <div class="geo-idx-card">
+        <span class="geo-flag">🇫🇷</span>
         <h3>Europe (France Anchor)</h3>
-        <p class="geo-line">Strong industrial demand shaped by stringent data protection and sovereign AI mandates.</p>
-        <p class="geo-line"><b>Watch for:</b> GDPR compliance, strict sustainability and carbon mandates.</p>
+        <p>Strong industrial demand shaped by stringent data protection laws, sovereign AI mandates, and ESG compliance requirements.</p>
+        <div class="geo-watch">⚠ GDPR compliance, strict sustainability and carbon emission mandates.</div>
       </div>
-      <div class="geo-card">
-        <span class="flag">🇮🇳</span>
+      <div class="geo-idx-card">
+        <span class="geo-flag">🇮🇳</span>
         <h3>India</h3>
-        <p class="geo-line">Hyper-growth digital adoption across fintech, healthcare, and manufacturing, backed by deep engineering talent.</p>
-        <p class="geo-line"><b>Watch for:</b> Infrastructure maturity pace, cost sensitivity, scaling speed.</p>
+        <p>Hyper-growth digital adoption across fintech, healthcare, and manufacturing, backed by deep engineering talent pools.</p>
+        <div class="geo-watch">⚠ Infrastructure maturity pace, cost sensitivity, rapid scaling requirements.</div>
       </div>
     </div>
   </section>
 
-  <!-- Expected Outcome -->
-  <div class="closing-block">
-    <div class="kicker">1.7 The Expected Outcome</div>
-    <p class="question">Why should NVIDIA trust <span class="green">AWS</span> with a <span class="green">$200 million</span> strategic partnership?</p>
+  <!-- ─── CLOSING ─── -->
+  <div class="closing-idx">
+    <div class="ck">§ 1.7 — The Fundamental Question</div>
+    <h2>Why should NVIDIA trust <span class="green">AWS</span> with a <span class="green">$200 million</span> strategic partnership?</h2>
+    <div class="btn-row">
+      <a href="handbook.html" class="btn btn-primary">Study the Handbook →</a>
+      <a href="framework.html" class="btn btn-secondary">See the Execution Plan</a>
+    </div>
   </div>
 
 </div>

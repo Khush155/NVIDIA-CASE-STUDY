@@ -5,6 +5,152 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AWS × NVIDIA — Bid Execution Framework</title>
 <link rel="stylesheet" href="styles.css">
+<style>
+.end-goal-card{
+  background: linear-gradient(135deg, rgba(118,185,0,0.08) 0%, rgba(22,27,34,0.95) 50%, rgba(255,153,0,0.06) 100%);
+  border: 1px solid rgba(118,185,0,0.35);
+  border-radius: 16px;
+  padding: 36px 32px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 0 30px rgba(118,185,0,0.08);
+}
+.end-goal-card::before{
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--nv-green), var(--aws-orange));
+}
+.eg-head{
+  text-align: center;
+  margin-bottom: 24px;
+}
+.eg-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nv-green);
+  background: rgba(118,185,0,0.12);
+  border: 1px solid rgba(118,185,0,0.3);
+  border-radius: 20px;
+  padding: 5px 14px;
+  margin-bottom: 12px;
+}
+.eg-head h2{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
+}
+.eg-head p{
+  font-size: 15px;
+  color: var(--text-dim);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* 7-Step Progression Grid */
+.eg-pipeline{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin: 24px 0;
+}
+.eg-step{
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 8px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+.eg-step:hover{
+  border-color: var(--nv-green);
+  transform: translateY(-2px);
+  background: rgba(118,185,0,0.06);
+}
+.eg-step .step-tag{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--nv-green);
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: block;
+}
+.eg-step .step-title{
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+.eg-step.highlight{
+  border-color: var(--aws-orange);
+  background: rgba(255,153,0,0.1);
+}
+.eg-step.highlight .step-tag{ color: var(--aws-orange); }
+
+/* 3 Deliverable Pillars */
+.eg-pillars{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 24px;
+}
+.eg-pillar-item{
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+.eg-pillar-item h4{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14.5px;
+  color: var(--text);
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.eg-pillar-item p{
+  font-size: 12.5px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.eg-quote{
+  background: rgba(118,185,0,0.06);
+  border-left: 3px solid var(--nv-green);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  font-size: 14.5px;
+  color: var(--text);
+  line-height: 1.6;
+  margin-top: 24px;
+  text-align: center;
+}
+
+@media (max-width: 900px){
+  .eg-pipeline{
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .eg-pillars{
+    grid-template-columns: 1fr;
+  }
+  .end-goal-card{
+    padding: 24px 18px;
+  }
+}
+</style>
 </head>
 <body>
 
@@ -348,18 +494,41 @@
 
       <!-- THE END GOAL -->
       <section id="end-goal" class="section">
-        <div class="golden-rule">
-          <h2>🏁 THE END GOAL</h2>
-          <div class="pillar-strip" style="margin:20px 0;">
-            <span class="pillar-chip">INDIVIDUAL EXPERTISE</span><span class="pillar-chip arrow">→</span>
-            <span class="pillar-chip">SHARED EVIDENCE</span><span class="pillar-chip arrow">→</span>
-            <span class="pillar-chip">COLLECTIVE CHALLENGE</span><span class="pillar-chip arrow">→</span>
-            <span class="pillar-chip">SELECTED SOLUTIONS</span><span class="pillar-chip arrow">→</span>
-            <span class="pillar-chip">INTEGRATED AWS STRATEGY</span><span class="pillar-chip arrow">→</span>
-            <span class="pillar-chip">$200M BUSINESS CASE</span><span class="pillar-chip arrow">→</span>
-            <span class="pillar-chip">FINAL BID</span>
+        <div class="end-goal-card">
+          <div class="eg-head">
+            <div class="eg-badge">🏁 THE END GOAL</div>
+            <h2>One Defensible $200M Strategic Proposal</h2>
+            <p>We do not win by accumulating isolated facts. We win by executing a 7-step pipeline that turns individual domain expertise into one unified, bulletproof executive proposal.</p>
           </div>
-          <p>"We do not win by having the most information. We win by turning the right information into the strongest defensible strategy."</p>
+
+          <div class="eg-pipeline">
+            <div class="eg-step"><span class="step-tag">01</span><span class="step-title">Individual Expertise</span></div>
+            <div class="eg-step"><span class="step-tag">02</span><span class="step-title">Shared Evidence</span></div>
+            <div class="eg-step"><span class="step-tag">03</span><span class="step-title">Collective Challenge</span></div>
+            <div class="eg-step"><span class="step-tag">04</span><span class="step-title">Selected Solutions</span></div>
+            <div class="eg-step"><span class="step-tag">05</span><span class="step-title">AWS Integration</span></div>
+            <div class="eg-step"><span class="step-tag">06</span><span class="step-title">$200M Case</span></div>
+            <div class="eg-step highlight"><span class="step-tag">07</span><span class="step-title">🏆 WIN THE BID</span></div>
+          </div>
+
+          <div class="eg-pillars">
+            <div class="eg-pillar-item">
+              <h4>🎯 Unified Voice</h4>
+              <p>10 executive roles speaking with one coherent voice and one shared strategic narrative.</p>
+            </div>
+            <div class="eg-pillar-item">
+              <h4>💰 Quantified ROI</h4>
+              <p>Clear payback periods, TCO savings, and financial models for every dollar of the $200M allocation.</p>
+            </div>
+            <div class="eg-pillar-item">
+              <h4>⚡ Defensible Strategy</h4>
+              <p>Every claim backed by technical proof, regulatory compliance, and operational SLAs.</p>
+            </div>
+          </div>
+
+          <div class="eg-quote">
+            "We do not win by having the most information. We win by turning the right information into the strongest defensible strategy."
+          </div>
         </div>
       </section>
 

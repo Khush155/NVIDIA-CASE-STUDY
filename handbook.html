@@ -4,7 +4,379 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Team Handbook — AWS × NVIDIA</title>
+<meta name="description" content="AWS × NVIDIA $200M Strategic Bid — Executive Team Handbook & Strategy 101 Intelligence Manual.">
 <link rel="stylesheet" href="styles.css">
+<style>
+/* ===== HANDBOOK PAGE SPECIFIC ENHANCEMENTS ===== */
+.hb-hero{
+  padding: 48px 0 36px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 40px;
+}
+.hb-hero .eyebrow{
+  margin-bottom: 16px;
+}
+.hb-hero h1{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(30px, 5vw, 50px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text);
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+}
+.hb-hero .sub{
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--text-dim);
+  max-width: 760px;
+}
+
+/* Sidebar navigation styled numbers */
+.handbook-sidebar a .sb-num{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--nv-green);
+  margin-right: 6px;
+}
+
+/* Accordion Summary Right-Aligned Tag Badges */
+.acc-tag, details.acc summary .count{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  color: var(--text-dim);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 3px 8px;
+  margin-left: auto;
+  margin-right: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Strategic Bid Chain Grid (Section 3) */
+.bid-chain-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.bid-chain-card{
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px;
+  transition: border-color 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.bid-chain-card::before{
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: var(--nv-green);
+  opacity: 0.6;
+}
+.bid-chain-card:hover{
+  border-color: rgba(118,185,0,0.4);
+  transform: translateY(-2px);
+}
+.bid-chain-card .bcc-num{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--nv-green);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.bid-chain-card h4{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+.bid-chain-card p{
+  font-size: 12.5px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Section 5 list cards */
+.invest-split{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+.invest-card{
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px;
+}
+.invest-card h4{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.invest-card h4 .dot-tag{
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--nv-green);
+}
+.invest-card h4 .dot-tag.o{ background: var(--aws-orange); }
+.invest-list{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.invest-list li{
+  font-size: 13px;
+  color: #C6CDD6;
+  line-height: 1.45;
+  padding-left: 16px;
+  position: relative;
+}
+.invest-list li::before{
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--nv-green);
+}
+.invest-list.o li::before{ color: var(--aws-orange); }
+
+/* Term Card Enhancements */
+.term-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+.term{
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 18px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.term:hover{
+  border-color: rgba(118,185,0,0.35);
+  transform: translateY(-1px);
+}
+.term dt{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  color: var(--nv-green);
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.term dt::before{
+  content: '';
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--nv-green);
+}
+.term dd{
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #C6CDD6;
+}
+
+/* Synergy Matrix Cards (Part VIII) */
+.synergy-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+.synergy-card{
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.synergy-card:hover{
+  border-color: rgba(118,185,0,0.4);
+  transform: translateY(-2px);
+}
+.synergy-badge{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--aws-orange);
+  background: rgba(255,153,0,0.08);
+  border: 1px solid rgba(255,153,0,0.2);
+  border-radius: 6px;
+  padding: 4px 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.synergy-card p{
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Section 7 - Five Questions Grid */
+.five-q-cards{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+.fq-item{
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.fq-item:hover{
+  border-color: rgba(118,185,0,0.35);
+  transform: translateY(-2px);
+}
+.fq-item .fq-num{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--nv-green);
+  margin-bottom: 6px;
+}
+.fq-item h4{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Part VII - Role Mini Cards */
+.role-grid-2col{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.role-mini-card{
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.role-mini-card:hover{
+  border-color: rgba(255,153,0,0.4);
+  transform: translateY(-2px);
+}
+.role-mini-card .rq-tag{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--aws-orange);
+  background: rgba(255,153,0,0.08);
+  border: 1px solid rgba(255,153,0,0.2);
+  border-radius: 6px;
+  padding: 4px 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.role-mini-card h4{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+.role-mini-card .owns-text{
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+.role-mini-card .key-q{
+  font-size: 12.5px;
+  color: var(--text);
+  background: var(--bg-raised);
+  border-left: 3px solid var(--nv-green);
+  padding: 10px 14px;
+  border-radius: 0 8px 8px 0;
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* Part IX - Q&A Defense List */
+.qa-defense-list{
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.qa-defense-item{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 12px 18px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.qa-defense-item:hover{
+  border-color: rgba(118,185,0,0.4);
+  background: rgba(118,185,0,0.03);
+}
+.qa-num{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--nv-green);
+  background: rgba(118,185,0,0.12);
+  border: 1px solid rgba(118,185,0,0.3);
+  border-radius: 6px;
+  padding: 4px 8px;
+  flex-shrink: 0;
+}
+.qa-text{
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Regional Guides 2x2 Grid */
+.geo-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px){
+  .invest-split, .role-grid-2col, .synergy-grid, .geo-grid{
+    grid-template-columns: 1fr;
+  }
+  .bid-chain-grid, .five-q-cards{
+    grid-template-columns: 1fr;
+  }
+  .hb-hero{
+    padding: 32px 0 24px;
+    margin-bottom: 28px;
+  }
+}
+</style>
 </head>
 <body>
 
@@ -23,24 +395,25 @@
 
 <div class="wrap">
 
-  <header>
-    <div class="eyebrow"><span class="dot"></span>TEAM HANDBOOK & EXECUTIVE PREPARATION PORTAL</div>
+  <!-- HERO -->
+  <div class="hb-hero">
+    <div class="eyebrow"><span class="dot"></span>TEAM HANDBOOK &amp; EXECUTIVE PREPARATION PORTAL</div>
     <h1>Everything you need,<br>before you need it</h1>
-    <p class="sub">This handbook is your team's master intelligence manual. Use it to master Strategy 101, understand core NVIDIA & AWS technologies, evaluate financial models, analyze geography strategies, and prepare your executive role for rapid-fire Q&A defense.</p>
-  </header>
+    <p class="sub">This handbook is your team's master intelligence manual. Use it to master Strategy 101, understand core NVIDIA &amp; AWS technologies, evaluate financial models, analyze geography strategies, and prepare your executive role for rapid-fire Q&amp;A defense.</p>
+  </div>
 
-  <div class="handbook-layout section">
+  <div class="handbook-layout">
     <aside class="handbook-sidebar">
-      <a href="#strategy101">Strategy 101</a>
-      <a href="#case">Part I: $200M Case</a>
-      <a href="#nvidia">Part II: NVIDIA Decoded</a>
-      <a href="#aws">Part III: AWS Decoded</a>
-      <a href="#combo">Part IV: Opportunity Map</a>
-      <a href="#business">Part V: Financial Case</a>
-      <a href="#geo">Part VI: Geographies</a>
-      <a href="#roles">Part VII: Role Guides</a>
-      <a href="#cross">Part VIII: Synergy Matrix</a>
-      <a href="#model">Part IX: Mental Model</a>
+      <a href="#strategy101"><span class="sb-num">01</span>Strategy 101</a>
+      <a href="#case"><span class="sb-num">02</span>Part I: $200M Case</a>
+      <a href="#nvidia"><span class="sb-num">03</span>Part II: NVIDIA Decoded</a>
+      <a href="#aws"><span class="sb-num">04</span>Part III: AWS Decoded</a>
+      <a href="#combo"><span class="sb-num">05</span>Part IV: Opportunity Map</a>
+      <a href="#business"><span class="sb-num">06</span>Part V: Financial Case</a>
+      <a href="#geo"><span class="sb-num">07</span>Part VI: Geographies</a>
+      <a href="#roles"><span class="sb-num">08</span>Part VII: Role Guides</a>
+      <a href="#cross"><span class="sb-num">09</span>Part VIII: Synergy Matrix</a>
+      <a href="#model"><span class="sb-num">10</span>Part IX: Mental Model</a>
     </aside>
 
     <div class="handbook-content">
@@ -53,14 +426,14 @@
           <div class="section-kicker">STRATEGY 101</div>
           <h2 class="section-title">Understanding the NVIDIA $200M Strategic Bid</h2>
           <p class="sub">Before you become a CFO, CTO, CMO, or any other executive — understand the business we're actually trying to win.</p>
-          <div class="objective-box">
+          <div class="objective-box" style="margin-top:16px;">
             <b>OBJECTIVE:</b> Build one unified, financially credible and strategically compelling proposal that convinces NVIDIA why AWS should be its preferred strategic technology partner for the $200M initiative.
           </div>
         </div>
 
         <!-- SECTION 1 — What Is This Challenge? -->
-        <details class="acc" open>
-          <summary>Section 1: What Is This Challenge? <span class="chev">▸</span></summary>
+        <details class="acc">
+          <summary>Section 1: What Is This Challenge? <span class="acc-tag">FOUNDATION</span><span class="chev">▸</span></summary>
           <div class="acc-body">
             <p class="sub" style="margin-bottom:14px;">We are not simply presenting AWS products. We are acting as AWS leadership competing for a USD 200 Million strategic opportunity with NVIDIA. Our objective is to understand NVIDIA's core business challenges, design an AWS-based solution, determine how the investment should be deployed, and demonstrate measurable value.</p>
             <div class="quote-block">
@@ -70,8 +443,8 @@
         </details>
 
         <!-- SECTION 2 — Business Case vs Presentation -->
-        <details class="acc" open>
-          <summary>Section 2: We Are Building a Business Case, Not Just a Presentation <span class="chev">▸</span></summary>
+        <details class="acc">
+          <summary>Section 2: We Are Building a Business Case, Not Just a Presentation <span class="acc-tag">STRATEGY</span><span class="chev">▸</span></summary>
           <div class="acc-body">
             <p class="sub" style="margin-bottom:12px;">Strategic executive presentations require connecting customer pain points directly to financial returns.</p>
             <div class="comp-grid">
@@ -84,37 +457,53 @@
                 <p>"NVIDIA has specific strategic challenges. AWS can address those challenges through a defined solution, funded through a $200M investment, with measurable financial and strategic returns."</p>
               </div>
             </div>
-            <div class="pillar-strip" style="margin-top:18px;">
-              <span class="pillar-chip">Problem</span><span class="pillar-chip arrow">→</span>
-              <span class="pillar-chip">Solution</span><span class="pillar-chip arrow">→</span>
-              <span class="pillar-chip">Investment</span><span class="pillar-chip arrow">→</span>
-              <span class="pillar-chip">Execution</span><span class="pillar-chip arrow">→</span>
-              <span class="pillar-chip">Impact</span><span class="pillar-chip arrow">→</span>
-              <span class="pillar-chip">ROI</span>
-            </div>
           </div>
         </details>
 
         <!-- SECTION 3 — The Bid Logic -->
-        <details class="acc" open>
-          <summary>Section 3: The Bid Logic Chain <span class="chev">▸</span></summary>
+        <details class="acc">
+          <summary>Section 3: The Bid Logic Chain <span class="acc-tag">FRAMEWORK</span><span class="chev">▸</span></summary>
           <div class="acc-body">
             <p class="sub" style="margin-bottom:12px;">A six-step decision process that connects every line of our proposal.</p>
-            <div class="bid-chain">
-              <div class="chain-step"><div class="step-num">01 UNDERSTAND</div><h4>NVIDIA's Problems</h4><p>Identify core market, technical, and operational challenges.</p></div>
-              <div class="chain-step"><div class="step-num">02 DESIGN</div><h4>AWS Solution</h4><p>Formulate cloud infrastructure, software, and services.</p></div>
-              <div class="chain-step"><div class="step-num">03 INVEST</div><h4>Deploy $200M</h4><p>Allocate capital strategically across high-impact pillars.</p></div>
-              <div class="chain-step"><div class="step-num">04 EXECUTE</div><h4>Build & Scale</h4><p>Operationalize deployment timelines, talent, and compliance.</p></div>
-              <div class="chain-step"><div class="step-num">05 MEASURE</div><h4>KPIs & Impact</h4><p>Track performance, efficiency gains, and market metrics.</p></div>
-              <div class="chain-step"><div class="step-num">06 RETURN</div><h4>NVIDIA ROI</h4><p>Deliver quantifiable financial return and long-term advantage.</p></div>
+            <div class="bid-chain-grid">
+              <div class="bid-chain-card">
+                <div class="bcc-num">01 · UNDERSTAND</div>
+                <h4>NVIDIA's Problems</h4>
+                <p>Identify core market, technical, and operational challenges.</p>
+              </div>
+              <div class="bid-chain-card">
+                <div class="bcc-num">02 · DESIGN</div>
+                <h4>AWS Solution</h4>
+                <p>Formulate cloud infrastructure, software, and services.</p>
+              </div>
+              <div class="bid-chain-card">
+                <div class="bcc-num">03 · INVEST</div>
+                <h4>Deploy $200M</h4>
+                <p>Allocate capital strategically across high-impact pillars.</p>
+              </div>
+              <div class="bid-chain-card">
+                <div class="bcc-num">04 · EXECUTE</div>
+                <h4>Build &amp; Scale</h4>
+                <p>Operationalize deployment timelines, talent, and compliance.</p>
+              </div>
+              <div class="bid-chain-card">
+                <div class="bcc-num">05 · MEASURE</div>
+                <h4>KPIs &amp; Impact</h4>
+                <p>Track performance, efficiency gains, and market metrics.</p>
+              </div>
+              <div class="bid-chain-card">
+                <div class="bcc-num">06 · RETURN</div>
+                <h4>NVIDIA ROI</h4>
+                <p>Deliver quantifiable financial return and long-term advantage.</p>
+              </div>
             </div>
             <p class="sub" style="margin-top:14px; font-style:italic; font-size:13.5px;"><b style="color:var(--nv-green);">Rule:</b> Every decision we make must strengthen this chain.</p>
           </div>
         </details>
 
         <!-- SECTION 4 — What Are We Actually Offering NVIDIA? -->
-        <details class="acc" open>
-          <summary>Section 4: What Are We Actually Offering NVIDIA? <span class="chev">▸</span></summary>
+        <details class="acc">
+          <summary>Section 4: What Are We Actually Offering NVIDIA? <span class="acc-tag">OFFERING</span><span class="chev">▸</span></summary>
           <div class="acc-body">
             <p class="sub" style="margin-bottom:14px;">The proposal is framed as a strategic AWS–NVIDIA partnership leveraging AWS capabilities to address NVIDIA's growth priorities.</p>
             <div class="equation-wrapper">
@@ -137,18 +526,31 @@
         </details>
 
         <!-- SECTION 5 — Why $200M Matters -->
-        <details class="acc" open>
-          <summary>Section 5: Why $200M Matters <span class="chev">▸</span></summary>
+        <details class="acc">
+          <summary>Section 5: Why $200M Matters <span class="acc-tag">CAPITAL</span><span class="chev">▸</span></summary>
           <div class="acc-body">
             <p class="sub" style="margin-bottom:14px;">$200M is not just a number — it is an investment budget to deploy strategically.</p>
-            <div class="term-grid">
-              <div class="term">
-                <dt>Potential Investment Areas (Examples)</dt>
-                <dd>• Hyperscale Cluster & Power Density<br>• Custom AI Software & Compiler Optimization<br>• R&D & Next-Gen Architecture Lab<br>• Zero-Trust Security & IP Fortress<br>• Specialized Cloud Engineering Talent<br>• Multi-Region Sovereign AI Deployment</dd>
+            <div class="invest-split">
+              <div class="invest-card">
+                <h4><span class="dot-tag"></span>Potential Investment Areas</h4>
+                <ul class="invest-list">
+                  <li>Hyperscale Cluster &amp; Power Density</li>
+                  <li>Custom AI Software &amp; Compiler Optimization</li>
+                  <li>R&amp;D &amp; Next-Gen Architecture Lab</li>
+                  <li>Zero-Trust Security &amp; IP Fortress</li>
+                  <li>Specialized Cloud Engineering Talent</li>
+                  <li>Multi-Region Sovereign AI Deployment</li>
+                </ul>
               </div>
-              <div class="term">
-                <dt>Expected Strategic Outputs</dt>
-                <dd>• Enterprise ARR & Revenue Acceleration<br>• Total Cost of Ownership (TCO) Reduction<br>• Accelerated Deployment Timelines<br>• High-Efficiency AI Factory Capacity<br>• Long-term Competitive Moat</dd>
+              <div class="invest-card">
+                <h4><span class="dot-tag o"></span>Expected Strategic Outputs</h4>
+                <ul class="invest-list o">
+                  <li>Enterprise ARR &amp; Revenue Acceleration</li>
+                  <li>Total Cost of Ownership (TCO) Reduction</li>
+                  <li>Accelerated Deployment Timelines</li>
+                  <li>High-Efficiency AI Factory Capacity</li>
+                  <li>Long-term Competitive Moat</li>
+                </ul>
               </div>
             </div>
             <p class="sub" style="margin-top:12px; font-size:12.5px; color:var(--aws-orange);">* Important: These are potential areas for research, NOT our finalized allocation.</p>
@@ -156,16 +558,16 @@
         </details>
 
         <!-- SECTION 6 — The "Why AWS?" Question -->
-        <details class="acc" open>
-          <summary>Section 6: The "Why AWS?" Question <span class="chev">▸</span></summary>
+        <details class="acc">
+          <summary>Section 6: The "Why AWS?" Question <span class="acc-tag">ADVANTAGE</span><span class="chev">▸</span></summary>
           <div class="acc-body">
             <p class="sub" style="margin-bottom:14px;">The judges will expect a clear answer to: <b>"Why AWS instead of another technology/cloud partner?"</b></p>
             <div class="term-grid">
               <div class="term"><dt>Global Infrastructure</dt><dd>100+ Availability Zones across 30+ geographic regions with dedicated fiber interconnects.</dd></div>
-              <div class="term"><dt>Hyperscale Scalability</dt><dd>EC2 UltraClusters scaling to 20,000+ GPUs with custom EFA (Elastic Fabric Adapter) 3.2 Tbps networking.</dd></div>
+              <div class="term"><dt>Hyperscale Scalability</dt><dd>EC2 UltraClusters scaling to 20,000+ GPUs with custom EFA 3.2 Tbps networking.</dd></div>
               <div class="term"><dt>Enterprise Governance</dt><dd>Industry-standard FedRAMP High, HIPAA, SOC 2 Type II, and PCI-DSS compliance frameworks.</dd></div>
               <div class="term"><dt>AI/ML Ecosystem</dt><dd>Amazon Bedrock, SageMaker HyperPod with automated node health checks and rapid fault recovery.</dd></div>
-              <div class="term"><dt>Security & Reliability</dt><dd>AWS Nitro System isolating tenant workloads at hardware level for maximum IP protection.</dd></div>
+              <div class="term"><dt>Security &amp; Reliability</dt><dd>AWS Nitro System isolating tenant workloads at hardware level for maximum IP protection.</dd></div>
               <div class="term"><dt>Developer Ecosystem</dt><dd>Millions of active enterprise cloud customers and developers natively deploying on AWS.</dd></div>
             </div>
             <div class="quote-block" style="margin-top:16px;">
@@ -175,23 +577,38 @@
         </details>
 
         <!-- SECTION 7 — Five Questions Every Executive Must Understand -->
-        <details class="acc" open>
-          <summary>Section 7: Five Questions Every Executive Must Understand <span class="chev">▸</span></summary>
+        <details class="acc">
+          <summary>Section 7: Five Questions Every Executive Must Understand <span class="acc-tag">PREPARATION</span><span class="chev">▸</span></summary>
           <div class="acc-body">
             <p class="sub" style="margin-bottom:14px;">Before starting individual research, every team member must be able to answer these five core questions:</p>
-            <div class="five-q-grid">
-              <div class="q-card"><div class="q-num">01</div><h4>What problem are we solving?</h4></div>
-              <div class="q-card"><div class="q-num">02</div><h4>What are we proposing?</h4></div>
-              <div class="q-card"><div class="q-num">03</div><h4>Why AWS?</h4></div>
-              <div class="q-card"><div class="q-num">04</div><h4>Why $200M?</h4></div>
-              <div class="q-card"><div class="q-num">05</div><h4>What does NVIDIA get?</h4></div>
+            <div class="five-q-cards">
+              <div class="fq-item">
+                <div class="fq-num">QUESTION 01</div>
+                <h4>What problem are we solving?</h4>
+              </div>
+              <div class="fq-item">
+                <div class="fq-num">QUESTION 02</div>
+                <h4>What are we proposing?</h4>
+              </div>
+              <div class="fq-item">
+                <div class="fq-num">QUESTION 03</div>
+                <h4>Why AWS?</h4>
+              </div>
+              <div class="fq-item">
+                <div class="fq-num">QUESTION 04</div>
+                <h4>Why $200M?</h4>
+              </div>
+              <div class="fq-item">
+                <div class="fq-num">QUESTION 05</div>
+                <h4>What does NVIDIA get?</h4>
+              </div>
             </div>
           </div>
         </details>
 
         <!-- SECTION 8 — How the Executive Team Fits Together -->
-        <details class="acc" open>
-          <summary>Section 8: How the Executive Team Fits Together <span class="chev">▸</span></summary>
+        <details class="acc">
+          <summary>Section 8: How the Executive Team Fits Together <span class="acc-tag">ALIGNMENT</span><span class="chev">▸</span></summary>
           <div class="acc-body">
             <p class="sub" style="margin-bottom:14px;">We are building <b>ONE proposal</b> from 10 executive perspectives, not 10 separate presentations.</p>
             <div class="hub-diagram">
@@ -200,15 +617,15 @@
                 <p>10 Executive Roles · 1 Proposal · 1 Story</p>
               </div>
               <div class="hub-roles">
-                <div class="hub-role-card"><b>👑 CEO</b><span>One unified strategy & pitch</span></div>
+                <div class="hub-role-card"><b>👑 CEO</b><span>One unified strategy &amp; pitch</span></div>
                 <div class="hub-role-card"><b>💻 CTO</b><span>Can we build it technically?</span></div>
                 <div class="hub-role-card"><b>💰 CFO</b><span>Is it financially worthwhile?</span></div>
-                <div class="hub-role-card"><b>🏭 COO</b><span>Can we execute & operationalize it?</span></div>
-                <div class="hub-role-card"><b>📢 CMO</b><span>Can we position & take it to market?</span></div>
-                <div class="hub-role-card"><b>👥 CHRO</b><span>Do we have the talent & people?</span></div>
+                <div class="hub-role-card"><b>🏭 COO</b><span>Can we execute &amp; operationalize it?</span></div>
+                <div class="hub-role-card"><b>📢 CMO</b><span>Can we position &amp; take it to market?</span></div>
+                <div class="hub-role-card"><b>👥 CHRO</b><span>Do we have the talent &amp; people?</span></div>
                 <div class="hub-role-card"><b>🧠 Strategy</b><span>Does it create long-term advantage?</span></div>
-                <div class="hub-role-card"><b>🔬 R&D</b><span>What comes next in innovation?</span></div>
-                <div class="hub-role-card"><b>⚖️ Legal</b><span>Can we do it safely & compliantly?</span></div>
+                <div class="hub-role-card"><b>🔬 R&amp;D</b><span>What comes next in innovation?</span></div>
+                <div class="hub-role-card"><b>⚖️ Legal</b><span>Can we do it safely &amp; compliantly?</span></div>
                 <div class="hub-role-card"><b>🤝 CX</b><span>Will customers actually adopt it?</span></div>
               </div>
             </div>
@@ -232,10 +649,10 @@
           <div class="section-kicker">Part I</div>
           <h2 class="section-title">The USD 200M Strategic Bid Challenge</h2>
         </div>
-        <details class="acc" open>
-          <summary>Core Problem & Bid Framework <span class="chev">▸</span></summary>
+        <details class="acc">
+          <summary>Core Problem &amp; Bid Framework <span class="acc-tag">ECOSYSTEM</span><span class="chev">▸</span></summary>
           <div class="acc-body">
-            <p class="sub" style="margin-bottom:14px;">NVIDIA is transitioning from a GPU silicon vendor into an end-to-end Accelerated Computing & AI Platform ecosystem. They need strategic IT partners who can host, optimize, scale, and secure their platform worldwide.</p>
+            <p class="sub" style="margin-bottom:14px;">NVIDIA is transitioning from a GPU silicon vendor into an end-to-end Accelerated Computing &amp; AI Platform ecosystem. They need strategic IT partners who can host, optimize, scale, and secure their platform worldwide.</p>
             <div class="term-grid">
               <div class="term"><dt>Strategic IT Partner</dt><dd>A partner providing hardware, ultra-low latency networking, cloud platform software, enterprise security, and global operations under one roof.</dd></div>
               <div class="term"><dt>Ecosystem Value Chain</dt><dd>Hardware → Networking → Cloud → Software → Security → Industry Apps → Operations → People → Strategy.</dd></div>
@@ -250,23 +667,23 @@
       <section id="nvidia" class="section">
         <div class="section-head">
           <div class="section-kicker">Part II</div>
-          <h2 class="section-title">NVIDIA Technologies & Business Moats</h2>
+          <h2 class="section-title">NVIDIA Technologies &amp; Business Moats</h2>
           <p class="sub">Understand NVIDIA's hardware, software ecosystems, and platform moat.</p>
         </div>
         <details class="acc">
-          <summary>Hardware & Software Stack <span class="count">10 concepts</span><span class="chev">▸</span></summary>
+          <summary>Hardware &amp; Software Stack <span class="acc-tag">10 CONCEPTS</span><span class="chev">▸</span></summary>
           <div class="acc-body">
             <div class="term-grid">
               <div class="term"><dt>GPU (Graphics Processing Unit)</dt><dd>Massively parallel processing chips optimized for linear algebra, matrix multiplications, AI training, and inference workloads.</dd></div>
               <div class="term"><dt>Tensor Cores</dt><dd>Specialized execution units on NVIDIA GPUs designed specifically for accelerating deep learning matrix math (FP16, INT8, FP8, NVFP4).</dd></div>
-              <div class="term"><dt>NVLink & NVSwitch</dt><dd>High-speed interconnect technology providing up to 1.8 TB/s bidirectional bandwidth per GPU to bypass PCIe bottlenecks.</dd></div>
+              <div class="term"><dt>NVLink &amp; NVSwitch</dt><dd>High-speed interconnect technology providing up to 1.8 TB/s bidirectional bandwidth per GPU to bypass PCIe bottlenecks.</dd></div>
               <div class="term"><dt>CUDA Platform</dt><dd>NVIDIA's parallel computing software platform that allows developers to use GPUs for general-purpose processing — NVIDIA's primary software moat.</dd></div>
               <div class="term"><dt>CUDA-X Libraries</dt><dd>Acceleration libraries (cuDNN, TensorRT, cuBLAS, NCCL) built on CUDA for deep learning, scientific computing, and graphics.</dd></div>
               <div class="term"><dt>Blackwell Architecture</dt><dd>NVIDIA's latest flagship GPU architecture (B200, GB200 NVL72) delivering 20 Pflops of FP4 AI performance and liquid-cooled rack density.</dd></div>
               <div class="term"><dt>Vera Rubin Architecture</dt><dd>NVIDIA's next-generation architecture featuring Rubin GPUs, Vera CPUs, and NVLink 6 networking for future hyperscale AI.</dd></div>
               <div class="term"><dt>NVIDIA AI Enterprise</dt><dd>Cloud-native suite of AI software including NeMo, NIM microservices, and enterprise support necessary for production AI.</dd></div>
               <div class="term"><dt>NVIDIA Omniverse</dt><dd>Real-time 3D simulation and industrial digital twin platform powered by OpenUSD and RTX technology.</dd></div>
-              <div class="term"><dt>NVIDIA NeMo & NIMs</dt><dd>Frameworks for building, customizing, and deploying generative AI foundation models into enterprise production seamlessly.</dd></div>
+              <div class="term"><dt>NVIDIA NeMo &amp; NIMs</dt><dd>Frameworks for building, customizing, and deploying generative AI foundation models into enterprise production seamlessly.</dd></div>
             </div>
           </div>
         </details>
@@ -278,10 +695,10 @@
       <section id="aws" class="section">
         <div class="section-head">
           <div class="section-kicker">Part III</div>
-          <h2 class="section-title">AWS Cloud Capabilities & Hyperscale Infrastructure</h2>
+          <h2 class="section-title">AWS Cloud Capabilities &amp; Hyperscale Infrastructure</h2>
         </div>
         <details class="acc">
-          <summary>AWS Compute, Networking & AI Stack <span class="count">9 concepts</span><span class="chev">▸</span></summary>
+          <summary>AWS Compute, Networking &amp; AI Stack <span class="acc-tag">9 CONCEPTS</span><span class="chev">▸</span></summary>
           <div class="acc-body">
             <div class="term-grid">
               <div class="term"><dt>EC2 UltraClusters</dt><dd>Hyperscale clusters linking tens of thousands of GPUs or AWS Trainium chips using ultra-low latency interconnects.</dd></div>
@@ -290,7 +707,7 @@
               <div class="term"><dt>Amazon Bedrock</dt><dd>Fully managed service providing high-performing foundation models via unified API, with enterprise privacy and safety guards.</dd></div>
               <div class="term"><dt>SageMaker HyperPod</dt><dd>Purpose-built infrastructure for training foundation models with automated cluster health monitoring and rapid node replacement.</dd></div>
               <div class="term"><dt>FSx for Lustre</dt><dd>High-performance POSIX file storage providing hundreds of GB/s throughput to feed high-speed GPU training pipelines.</dd></div>
-              <div class="term"><dt>AWS Graviton & Trainium</dt><dd>AWS custom silicon powering energy-efficient head nodes (Graviton4) and cost-optimized AI training (Trainium2).</dd></div>
+              <div class="term"><dt>AWS Graviton &amp; Trainium</dt><dd>AWS custom silicon powering energy-efficient head nodes (Graviton4) and cost-optimized AI training (Trainium2).</dd></div>
               <div class="term"><dt>Hyperscale Scalability</dt><dd>Ability to expand compute resources elasticity from single instances to multi-region supercomputing clusters on demand.</dd></div>
               <div class="term"><dt>Multi-AZ High Availability</dt><dd>Deploying workloads across isolated datacenters with independent power, cooling, and networking for 99.99% operational uptime.</dd></div>
             </div>
@@ -305,10 +722,10 @@
         <div class="section-head">
           <div class="section-kicker">Part IV</div>
           <h2 class="section-title">AWS × NVIDIA Strategic Integration</h2>
-          <p class="sub">Combining NVIDIA accelerated hardware & software with AWS global scale, enterprise security, and operations.</p>
+          <p class="sub">Combining NVIDIA accelerated hardware &amp; software with AWS global scale, enterprise security, and operations.</p>
         </div>
         <details class="acc">
-          <summary>Strategic Alignment Vectors <span class="count">6 areas</span><span class="chev">▸</span></summary>
+          <summary>Strategic Alignment Vectors <span class="acc-tag">6 VECTORS</span><span class="chev">▸</span></summary>
           <div class="acc-body">
             <div class="term-grid">
               <div class="term"><dt>The AI Factory Architecture</dt><dd>Continuous pipeline: Raw Data → AWS S3 Storage → EFA High-Speed Network → NVIDIA GB200 Cluster → Model Weight Checkpointing → Global API Inference.</dd></div>
@@ -328,11 +745,11 @@
       <section id="business" class="section">
         <div class="section-head">
           <div class="section-kicker">Part V</div>
-          <h2 class="section-title">Financial Modeling & Business Case Logic ($200M)</h2>
+          <h2 class="section-title">Financial Modeling &amp; Business Case Logic ($200M)</h2>
           <p class="sub">Every role must justify financial viability, cost savings, and return on investment.</p>
         </div>
         <details class="acc">
-          <summary>Financial Metrics & Investment Concepts <span class="count">7 concepts</span><span class="chev">▸</span></summary>
+          <summary>Financial Metrics &amp; Investment Concepts <span class="acc-tag">7 METRICS</span><span class="chev">▸</span></summary>
           <div class="acc-body">
             <div class="term-grid">
               <div class="term"><dt>Return on Investment (ROI)</dt><dd>Net Financial Value / Initial $200M Outlay. Demonstrating how every dollar invested yields quantifiable revenue or cost savings.</dd></div>
@@ -394,69 +811,69 @@
       <section id="roles" class="section">
         <div class="section-head">
           <div class="section-kicker">Part VII</div>
-          <h2 class="section-title">Executive Role Guides & Deliverables</h2>
+          <h2 class="section-title">Executive Role Guides &amp; Deliverables</h2>
           <p class="sub">Detailed breakdown of the 10 executive seats. Check the <a href="roster.html" style="color:var(--nv-green);">team roster</a> to see seat assignments.</p>
         </div>
-        <div class="card-grid">
-          <div class="role-mini">
-            <div class="rq">Why should NVIDIA choose us?</div>
+        <div class="role-grid-2col">
+          <div class="role-mini-card">
+            <span class="rq-tag">WHY SHOULD NVIDIA CHOOSE US?</span>
             <h4>👑 CEO — Chief Executive Officer</h4>
-            <p class="owns"><b>Owns:</b> Overall strategy, value proposition, executive synthesis, opening pitch, and final closing defense.</p>
-            <p class="owns" style="margin-top:6px; color:var(--text);"><b>Key Question:</b> How does this $200M deal accelerate NVIDIA's strategic objectives better than any alternative?</p>
+            <p class="owns-text"><b>Owns:</b> Overall strategy, value proposition, executive synthesis, opening pitch, and final closing defense.</p>
+            <p class="key-q"><b>Key Question:</b> How does this $200M deal accelerate NVIDIA's strategic objectives better than any alternative?</p>
           </div>
-          <div class="role-mini">
-            <div class="rq">How do we solve it technically?</div>
+          <div class="role-mini-card">
+            <span class="rq-tag">HOW DO WE SOLVE IT TECHNICALLY?</span>
             <h4>💻 CTO — Chief Technology Officer</h4>
-            <p class="owns"><b>Owns:</b> Architecture design, Blackwell/Vera Rubin cloud integration, EFA networking, storage throughput, cluster resiliency.</p>
-            <p class="owns" style="margin-top:6px; color:var(--text);"><b>Key Question:</b> Can our technical architecture deliver zero-downtime, maximum-utilization AI factory performance?</p>
+            <p class="owns-text"><b>Owns:</b> Architecture design, Blackwell/Vera Rubin cloud integration, EFA networking, storage throughput, cluster resiliency.</p>
+            <p class="key-q"><b>Key Question:</b> Can our technical architecture deliver zero-downtime, maximum-utilization AI factory performance?</p>
           </div>
-          <div class="role-mini">
-            <div class="rq">Why is $200M justified?</div>
+          <div class="role-mini-card">
+            <span class="rq-tag">WHY IS $200M JUSTIFIED?</span>
             <h4>💰 CFO — Chief Financial Officer</h4>
-            <p class="owns"><b>Owns:</b> $200M capital allocation, TCO reduction models, payback schedule, CAPEX-to-OPEX shift, and revenue sharing.</p>
-            <p class="owns" style="margin-top:6px; color:var(--text);"><b>Key Question:</b> What is NVIDIA's internal rate of return (IRR) and payback period on this $200M commitment?</p>
+            <p class="owns-text"><b>Owns:</b> $200M capital allocation, TCO reduction models, payback schedule, CAPEX-to-OPEX shift, and revenue sharing.</p>
+            <p class="key-q"><b>Key Question:</b> What is NVIDIA's internal rate of return (IRR) and payback period on this $200M commitment?</p>
           </div>
-          <div class="role-mini">
-            <div class="rq">Why choose us over alternatives?</div>
+          <div class="role-mini-card">
+            <span class="rq-tag">WHY CHOOSE US OVER ALTERNATIVES?</span>
             <h4>📢 CMO — Chief Marketing Officer</h4>
-            <p class="owns"><b>Owns:</b> Market sizing (TAM/SAM/SOM), competitive positioning against azure/gcp, customer adoption, go-to-market.</p>
-            <p class="owns" style="margin-top:6px; color:var(--text);"><b>Key Question:</b> How does AWS branding and enterprise customer access accelerate NVIDIA software revenue?</p>
+            <p class="owns-text"><b>Owns:</b> Market sizing (TAM/SAM/SOM), competitive positioning against Azure/GCP, customer adoption, go-to-market.</p>
+            <p class="key-q"><b>Key Question:</b> How does AWS branding and enterprise customer access accelerate NVIDIA software revenue?</p>
           </div>
-          <div class="role-mini">
-            <div class="rq">Do we have the people to execute?</div>
+          <div class="role-mini-card">
+            <span class="rq-tag">DO WE HAVE THE PEOPLE TO EXECUTE?</span>
             <h4>👥 CHRO — Chief Human Resources Officer</h4>
-            <p class="owns"><b>Owns:</b> Specialist cloud AI engineering talent, team reskilling, cross-organizational co-location, leadership culture.</p>
-            <p class="owns" style="margin-top:6px; color:var(--text);"><b>Key Question:</b> Do we have the human capital and organizational model required to operationalize $200M cleanly?</p>
+            <p class="owns-text"><b>Owns:</b> Specialist cloud AI engineering talent, team reskilling, cross-organizational co-location, leadership culture.</p>
+            <p class="key-q"><b>Key Question:</b> Do we have the human capital and organizational model required to operationalize $200M cleanly?</p>
           </div>
-          <div class="role-mini">
-            <div class="rq">How do we actually execute?</div>
+          <div class="role-mini-card">
+            <span class="rq-tag">HOW DO WE ACTUALLY EXECUTE?</span>
             <h4>🏭 COO — Chief Operating Officer</h4>
-            <p class="owns"><b>Owns:</b> Supply chain logistics, datacenter construction, hardware lead-times, operational SLA uptime, risk management.</p>
-            <p class="owns" style="margin-top:6px; color:var(--text);"><b>Key Question:</b> What is our deployment schedule and how do we mitigate hardware supply disruptions?</p>
+            <p class="owns-text"><b>Owns:</b> Supply chain logistics, datacenter construction, hardware lead-times, operational SLA uptime, risk management.</p>
+            <p class="key-q"><b>Key Question:</b> What is our deployment schedule and how do we mitigate hardware supply disruptions?</p>
           </div>
-          <div class="role-mini">
-            <div class="rq">Where does this go long-term?</div>
+          <div class="role-mini-card">
+            <span class="rq-tag">WHERE DOES THIS GO LONG-TERM?</span>
             <h4>🧠 Head of Strategy</h4>
-            <p class="owns"><b>Owns:</b> 5-year strategic roadmap, global expansion, diversification into sovereign AI & digital twins, M&A synergies.</p>
-            <p class="owns" style="margin-top:6px; color:var(--text);"><b>Key Question:</b> How does this deal create a long-term competitive moat for NVIDIA over the next decade?</p>
+            <p class="owns-text"><b>Owns:</b> 5-year strategic roadmap, global expansion, diversification into sovereign AI &amp; digital twins, M&amp;A synergies.</p>
+            <p class="key-q"><b>Key Question:</b> How does this deal create a long-term competitive moat for NVIDIA over the next decade?</p>
           </div>
-          <div class="role-mini">
-            <div class="rq">Can we legally do this?</div>
-            <h4>⚖️ Head of Legal & Compliance</h4>
-            <p class="owns"><b>Owns:</b> IP protection, confidential computing legal bounds, GDPR/EU AI Act compliance, international trade/export rules.</p>
-            <p class="owns" style="margin-top:6px; color:var(--text);"><b>Key Question:</b> How do we protect NVIDIA's proprietary IP and models across international legal jurisdictions?</p>
+          <div class="role-mini-card">
+            <span class="rq-tag">CAN WE LEGALLY DO THIS?</span>
+            <h4>⚖️ Head of Legal &amp; Compliance</h4>
+            <p class="owns-text"><b>Owns:</b> IP protection, confidential computing legal bounds, GDPR/EU AI Act compliance, international trade/export rules.</p>
+            <p class="key-q"><b>Key Question:</b> How do we protect NVIDIA's proprietary IP and models across international legal jurisdictions?</p>
           </div>
-          <div class="role-mini">
-            <div class="rq">What comes next?</div>
-            <h4>🔬 Head of R&D — Research & Development</h4>
-            <p class="owns"><b>Owns:</b> Future architecture co-design, quantum-classical hybrid labs, optical interconnects, next-gen AI software research.</p>
-            <p class="owns" style="margin-top:6px; color:var(--text);"><b>Key Question:</b> How will AWS and NVIDIA co-innovate on next-generation hardware and software beyond Blackwell?</p>
+          <div class="role-mini-card">
+            <span class="rq-tag">WHAT COMES NEXT?</span>
+            <h4>🔬 Head of R&amp;D — Research &amp; Development</h4>
+            <p class="owns-text"><b>Owns:</b> Future architecture co-design, quantum-classical hybrid labs, optical interconnects, next-gen AI software research.</p>
+            <p class="key-q"><b>Key Question:</b> How will AWS and NVIDIA co-innovate on next-generation hardware and software beyond Blackwell?</p>
           </div>
-          <div class="role-mini">
-            <div class="rq">How does the customer experience this?</div>
+          <div class="role-mini-card">
+            <span class="rq-tag">HOW DOES THE CUSTOMER EXPERIENCE THIS?</span>
             <h4>🤝 Head of CX — Customer Experience</h4>
-            <p class="owns"><b>Owns:</b> Developer platform usability, API latency, onboarding support, SDK integration, enterprise customer satisfaction.</p>
-            <p class="owns" style="margin-top:6px; color:var(--text);"><b>Key Question:</b> How do we ensure developers and enterprise users get a frictionless experience on AWS?</p>
+            <p class="owns-text"><b>Owns:</b> Developer platform usability, API latency, onboarding support, SDK integration, enterprise customer satisfaction.</p>
+            <p class="key-q"><b>Key Question:</b> How do we ensure developers and enterprise users get a frictionless experience on AWS?</p>
           </div>
         </div>
       </section>
@@ -470,13 +887,31 @@
           <h2 class="section-title">Cross-Functional Synergy Matrix</h2>
           <p class="sub">Executive decisions are interdependent. Every role must understand how their area impacts the other nine.</p>
         </div>
-        <div class="term-grid">
-          <div class="term"><dt>CTO ⇄ CFO Integration</dt><dd>CTO's liquid cooling and EFA architecture choices directly drive the CFO's 30% power saving and TCO reduction model.</dd></div>
-          <div class="term"><dt>Legal ⇄ CTO Integration</dt><dd>Legal compliance (SecNumCloud / FedRAMP) dictates which physical datacenters and AWS Nitro Enclaves CTO can deploy.</dd></div>
-          <div class="term"><dt>CMO ⇄ CX Integration</dt><dd>CMO's enterprise market positioning relies on CX delivering one-click deployment for NVIDIA NIM microservices.</dd></div>
-          <div class="term"><dt>CHRO ⇄ COO Integration</dt><dd>CHRO's speed in deploying certified AI cloud architects determines COO's cluster installation timeline.</dd></div>
-          <div class="term"><dt>R&D ⇄ Strategy Integration</dt><dd>Head of R&D's optical interconnect research provides Head of Strategy with a 5-year competitive moat against rivals.</dd></div>
-          <div class="term"><dt>CEO Synthesis</dt><dd>CEO integrates all 9 operational streams into one compelling, bulletproof narrative for judges.</dd></div>
+        <div class="synergy-grid">
+          <div class="synergy-card">
+            <span class="synergy-badge">CTO ⚡ CFO INTEGRATION</span>
+            <p>CTO's liquid cooling and EFA architecture choices directly drive the CFO's 30% power saving and TCO reduction model.</p>
+          </div>
+          <div class="synergy-card">
+            <span class="synergy-badge">LEGAL ⚡ CTO INTEGRATION</span>
+            <p>Legal compliance (SecNumCloud / FedRAMP) dictates which physical datacenters and AWS Nitro Enclaves CTO can deploy.</p>
+          </div>
+          <div class="synergy-card">
+            <span class="synergy-badge">CMO ⚡ CX INTEGRATION</span>
+            <p>CMO's enterprise market positioning relies on CX delivering one-click deployment for NVIDIA NIM microservices.</p>
+          </div>
+          <div class="synergy-card">
+            <span class="synergy-badge">CHRO ⚡ COO INTEGRATION</span>
+            <p>CHRO's speed in deploying certified AI cloud architects determines COO's cluster installation timeline.</p>
+          </div>
+          <div class="synergy-card">
+            <span class="synergy-badge">R&amp;D ⚡ STRATEGY INTEGRATION</span>
+            <p>Head of R&amp;D's optical interconnect research provides Head of Strategy with a 5-year competitive moat against rivals.</p>
+          </div>
+          <div class="synergy-card">
+            <span class="synergy-badge">CEO SYNTHESIS</span>
+            <p>CEO integrates all 9 operational streams into one compelling, bulletproof narrative for judges.</p>
+          </div>
         </div>
       </section>
 
@@ -486,37 +921,35 @@
       <section id="model" class="section">
         <div class="section-head">
           <div class="section-kicker">Part IX</div>
-          <h2 class="section-title">Mental Model for Rapid-Fire Q&A Defense</h2>
+          <h2 class="section-title">Mental Model for Rapid-Fire Q&amp;A Defense</h2>
+          <p class="sub">Follow this 10-step sequence under judge fire to defend your executive position with impact.</p>
         </div>
-        <div class="flow-list">
-          <div class="flow-step"><span class="fn">01</span><span class="ft">Identify NVIDIA's Specific Pain Point</span></div>
-          <div class="flow-arrow">↓</div>
-          <div class="flow-step"><span class="fn">02</span><span class="ft">Explain Why It Matters Strategically</span></div>
-          <div class="flow-arrow">↓</div>
-          <div class="flow-step"><span class="fn">03</span><span class="ft">Present the Specific AWS Capability</span></div>
-          <div class="flow-arrow">↓</div>
-          <div class="flow-step"><span class="fn">04</span><span class="ft">Demonstrate Technical & Operational Viability</span></div>
-          <div class="flow-arrow">↓</div>
-          <div class="flow-step"><span class="fn">05</span><span class="ft">Quantify the Financial & $200M Allocation Impact</span></div>
-          <div class="flow-arrow">↓</div>
-          <div class="flow-step"><span class="fn">06</span><span class="ft">Highlight Quantifiable NVIDIA ROI</span></div>
-          <div class="flow-arrow">↓</div>
-          <div class="flow-step"><span class="fn">07</span><span class="ft">Address Potential Risks & Mitigations</span></div>
-          <div class="flow-arrow">↓</div>
-          <div class="flow-step"><span class="fn">08</span><span class="ft">Defend "Why AWS Over Alternatives?"</span></div>
-          <div class="flow-arrow">↓</div>
-          <div class="flow-step"><span class="fn">09</span><span class="ft">Tie Back to the Long-Term Strategic Moat</span></div>
-          <div class="flow-arrow">↓</div>
-          <div class="flow-step"><span class="fn">10</span><span class="ft">Close with Unified Proposal Message</span></div>
+
+        <ul class="qa-defense-list">
+          <li class="qa-defense-item"><span class="qa-num">STEP 01</span><span class="qa-text">Identify NVIDIA's Specific Pain Point</span></li>
+          <li class="qa-defense-item"><span class="qa-num">STEP 02</span><span class="qa-text">Explain Why It Matters Strategically</span></li>
+          <li class="qa-defense-item"><span class="qa-num">STEP 03</span><span class="qa-text">Present the Specific AWS Capability</span></li>
+          <li class="qa-defense-item"><span class="qa-num">STEP 04</span><span class="qa-text">Demonstrate Technical &amp; Operational Viability</span></li>
+          <li class="qa-defense-item"><span class="qa-num">STEP 05</span><span class="qa-text">Quantify the Financial &amp; $200M Allocation Impact</span></li>
+          <li class="qa-defense-item"><span class="qa-num">STEP 06</span><span class="qa-text">Highlight Quantifiable NVIDIA ROI</span></li>
+          <li class="qa-defense-item"><span class="qa-num">STEP 07</span><span class="qa-text">Address Potential Risks &amp; Mitigations</span></li>
+          <li class="qa-defense-item"><span class="qa-num">STEP 08</span><span class="qa-text">Defend "Why AWS Over Alternatives?"</span></li>
+          <li class="qa-defense-item"><span class="qa-num">STEP 09</span><span class="qa-text">Tie Back to the Long-Term Strategic Moat</span></li>
+          <li class="qa-defense-item"><span class="qa-num">STEP 10</span><span class="qa-text">Close with Unified Proposal Message</span></li>
+        </ul>
+
+        <div class="objective-box" style="margin-top:20px;">
+          <b>DEFENSE RULE:</b> Structure → Answer → Quantify → Defend. Aim for maximum 90 seconds per response.
         </div>
-        <p class="sub" style="margin-top: 20px;"><b style="color:var(--text);">Structure → Answer → Quantify → Defend.</b> 90 seconds per question under judge fire.</p>
-      </section>    </div>
+      </section>
+
+    </div>
   </div>
 </div>
 
 <footer class="site-footer">
   <span>AWS × NVIDIA BID PROGRAM</span>
-  <span>STRATEGY 101 & TEAM HANDBOOK</span>
+  <span>STRATEGY 101 &amp; TEAM HANDBOOK</span>
 </footer>
 
 <!-- MOBILE SIDE NAVIGATION DRAWER -->
