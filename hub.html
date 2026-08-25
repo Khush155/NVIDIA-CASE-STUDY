@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research & Intelligence Hub — AWS × NVIDIA</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="brand"><span class="dot"></span>AWS <span class="orange">×</span> NVIDIA</a>
+  <div class="nav-links">
+    <a href="index.html">Overview</a>
+    <a href="handbook.html">Handbook</a>
+    <a href="solutions.html">Solutions</a>
+    <a href="framework.html">Framework</a>
+    <a href="hub.html" class="active">Research Hub</a>
+    <a href="roster.html">Team Roster</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow"><span class="dot"></span>EXECUTIVE INTELLIGENCE HUB</div>
+    <h1>Executive Research Canvas &<br><span class="green">Real-time Intelligence</span></h1>
+    <p class="sub">Select an executive seat to view, edit, or publish role-specific research, PDF whitepapers, Q&A defense statements, and key financial/technical metrics. Every block added or edited updates in real time for the whole team.</p>
+
+    <div class="sync-note" style="margin-top:14px;">
+      <span class="sync-dot" id="sync-dot"></span>
+      <span id="sync-text">Connecting to live research database…</span>
+    </div>
+
+    <!-- 10 SEAT TABS -->
+    <div class="hub-tabs-wrap">
+      <div class="hub-tabs" id="seat-tabs">
+        <button class="hub-tab-btn active" data-seat="01">👑 01 CEO</button>
+        <button class="hub-tab-btn" data-seat="02">💻 02 CTO</button>
+        <button class="hub-tab-btn" data-seat="03">💰 03 CFO</button>
+        <button class="hub-tab-btn" data-seat="04">📢 04 CMO</button>
+        <button class="hub-tab-btn" data-seat="05">👥 05 CHRO</button>
+        <button class="hub-tab-btn" data-seat="06">🏭 06 COO</button>
+        <button class="hub-tab-btn" data-seat="07">🧠 07 Strategy</button>
+        <button class="hub-tab-btn" data-seat="08">🔬 08 R&D</button>
+        <button class="hub-tab-btn" data-seat="09">⚖️ 09 Legal</button>
+        <button class="hub-tab-btn" data-seat="10">🤝 10 CX</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ACTIVE SEAT BANNER -->
+  <div class="hub-seat-banner">
+    <div class="hub-seat-info">
+      <h2 id="active-title">👑 CEO — Chief Executive Officer</h2>
+      <p id="active-sub">Assigned to: <b style="color:var(--nv-green);" id="active-assigned">Khush</b> · Research Workspace</p>
+    </div>
+    <div class="hub-actions">
+      <button class="add-block-btn" id="open-modal-btn" type="button"><span>+</span> Add Content Block</button>
+    </div>
+  </div>
+
+  <!-- DYNAMIC BLOCK CANVAS -->
+  <div class="hub-canvas" id="hub-canvas">
+    <!-- Blocks render here dynamically -->
+  </div>
+
+</div>
+
+<!-- ADD / EDIT BLOCK MODAL -->
+<div class="modal-overlay" id="block-modal">
+  <div class="modal-card">
+    <h3 id="modal-heading">Add Research Block</h3>
+    <form id="block-form">
+      <input type="hidden" id="editing-block-id" value="">
+
+      <div class="modal-field">
+        <label>Select Block Type</label>
+        <select id="block-type" required>
+          <option value="text">📝 Text / Analysis Note</option>
+          <option value="ps">⚡ Problem → Solution Pair</option>
+          <option value="qa">❓ Q&A Rapid-Fire Defense</option>
+          <option value="pdf">📄 PDF / Document Link Embed</option>
+          <option value="metric">📊 Key Metric / Stat Card</option>
+          <option value="quote">💡 Executive Quote / Key Takeaway</option>
+        </select>
+      </div>
+
+      <!-- DRAG & DROP ZONE INSIDE MODAL FOR PDF TYPE -->
+      <div class="modal-field" id="field-dropzone" style="display:none;">
+        <label>Drag & Drop PDF Document File</label>
+        <div class="drop-zone" id="modal-pdf-dropzone" style="margin-top:4px; padding:18px;">
+          <div class="dz-icon" style="font-size:22px;">📄 📂</div>
+          <div class="dz-title" style="font-size:13.5px;" id="dz-status-title">Drag & Drop PDF File Here</div>
+          <div class="dz-sub" style="font-size:11.5px;">or click to select PDF file from device</div>
+          <input type="file" id="pdf-file-input" accept=".pdf,application/pdf" style="display:none;">
+        </div>
+      </div>
+
+      <div class="modal-field">
+        <label id="lbl-title">Title / Headline</label>
+        <input type="text" id="inp-title" placeholder="e.g. EC2 UltraCluster EFA Latency Benchmark" required autocomplete="off">
+      </div>
+
+      <div class="modal-field" id="field-body">
+        <label id="lbl-body">Content Body / Detailed Analysis</label>
+        <textarea id="inp-body" placeholder="Describe the findings, benchmarks, or implementation details..."></textarea>
+      </div>
+
+      <div class="modal-field" id="field-extra" style="display:none;">
+        <label id="lbl-extra">Extra Detail / Link URL</label>
+        <input type="text" id="inp-extra" placeholder="https://..." autocomplete="off">
+      </div>
+
+      <div class="modal-btns">
+        <button type="button" class="modal-cancel" id="close-modal-btn">Cancel</button>
+        <button type="submit" class="modal-submit" id="submit-block-btn">Publish Block</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- CUSTOM DELETE CONFIRMATION MODAL -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal-card" style="max-width: 420px; text-align: center;">
+    <div style="font-size: 38px; margin-bottom: 6px;">🗑️</div>
+    <h3 style="margin-bottom: 8px;">Delete Research Block?</h3>
+    <p style="font-size: 13.5px; color: var(--text-dim); margin-bottom: 22px; line-height: 1.5;">Are you sure you want to delete this research block? This action cannot be undone and will update live for all team members.</p>
+    <div class="modal-btns" style="justify-content: center; gap: 12px;">
+      <button type="button" class="modal-cancel" id="cancel-delete-btn">Cancel</button>
+      <button type="button" class="modal-submit" id="confirm-delete-btn" style="background: var(--danger); color: #FFF;">Yes, Delete Block</button>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <span>AWS × NVIDIA BID PROGRAM</span>
+  <span>RESEARCH & INTELLIGENCE HUB</span>
+</footer>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDwmk3KK8e1qjwMI2u6XBiftv6tvZ59IaA",
+    authDomain: "nvidia-case-study.firebaseapp.com",
+    databaseURL: "https://nvidia-case-study-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "nvidia-case-study",
+    storageBucket: "nvidia-case-study.firebasestorage.app",
+    messagingSenderId: "104986261772",
+    appId: "1:104986261772:web:0f0414e62bb7e3beb93129"
+  };
+
+  const SEATS_INFO = {
+    '01': { role: '👑 CEO — Chief Executive Officer', defaultName: 'Khush' },
+    '02': { role: '💻 CTO — Chief Technology Officer', defaultName: 'Unassigned' },
+    '03': { role: '💰 CFO — Chief Financial Officer', defaultName: 'Unassigned' },
+    '04': { role: '📢 CMO — Chief Marketing Officer', defaultName: 'Unassigned' },
+    '05': { role: '👥 CHRO — Chief Human Resources Officer', defaultName: 'Unassigned' },
+    '06': { role: '🏭 COO — Chief Operating Officer', defaultName: 'Unassigned' },
+    '07': { role: '🧠 Head of Strategy', defaultName: 'Unassigned' },
+    '08': { role: '🔬 Head of R&D', defaultName: 'Unassigned' },
+    '09': { role: '⚖️ Head of Legal & Compliance', defaultName: 'Unassigned' },
+    '10': { role: '🤝 Head of CX', defaultName: 'Unassigned' }
+  };
+
+  let activeSeat = '01';
+  let db = null;
+  let seatDataCache = {};
+  let uploadedPdfDataUrl = '';
+  let pendingDeleteKey = null;
+
+  const syncDot = document.getElementById('sync-dot');
+  const syncText = document.getElementById('sync-text');
+  const canvasEl = document.getElementById('hub-canvas');
+  const modalEl = document.getElementById('block-modal');
+  const confirmModalEl = document.getElementById('confirm-modal');
+  const modalHeading = document.getElementById('modal-heading');
+  const submitBlockBtn = document.getElementById('submit-block-btn');
+  const editingBlockIdEl = document.getElementById('editing-block-id');
+
+  const blockTypeEl = document.getElementById('block-type');
+  const lblTitle = document.getElementById('lbl-title');
+  const lblBody = document.getElementById('lbl-body');
+  const lblExtra = document.getElementById('lbl-extra');
+  const fieldExtra = document.getElementById('field-extra');
+  const fieldDropzone = document.getElementById('field-dropzone');
+  const modalDropzone = document.getElementById('modal-pdf-dropzone');
+  const fileInput = document.getElementById('pdf-file-input');
+  const dzStatusTitle = document.getElementById('dz-status-title');
+
+  function setSync(state, msg){
+    syncDot.className = 'sync-dot ' + state;
+    syncText.textContent = msg;
+  }
+
+  // Handle Tab Switch
+  document.querySelectorAll('.hub-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.hub-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeSeat = btn.dataset.seat;
+      updateActiveSeatView();
+    });
+  });
+
+  function getLocalBlocks(seat){
+    try {
+      return JSON.parse(localStorage.getItem('roster-blocks-' + seat) || '{}');
+    } catch(e) {
+      return {};
+    }
+  }
+
+  function setLocalBlocks(seat, blocks){
+    try {
+      localStorage.setItem('roster-blocks-' + seat, JSON.stringify(blocks));
+    } catch(e) {}
+  }
+
+  function updateActiveSeatView(){
+    const info = SEATS_INFO[activeSeat];
+    const fbData = seatDataCache[activeSeat] || {};
+    const assignedName = (fbData && fbData.name) || info.defaultName;
+    document.getElementById('active-title').textContent = info.role;
+    document.getElementById('active-assigned').textContent = assignedName;
+
+    // Merge Firebase blocks + Local Storage blocks
+    const fbBlocks = fbData.blocks || {};
+    const localBlocks = getLocalBlocks(activeSeat);
+    const combinedBlocks = Object.assign({}, fbBlocks, localBlocks);
+
+    renderCanvasBlocks(combinedBlocks);
+  }
+
+  function renderCanvasBlocks(blocksObj){
+    canvasEl.innerHTML = '';
+    const keys = Object.keys(blocksObj);
+
+    if (keys.length === 0) {
+      canvasEl.innerHTML = `
+        <div class="solution-block" style="text-align:center; padding:40px 20px;">
+          <h3 style="font-family:'Space Grotesk',sans-serif; color:var(--text-dim); margin-bottom:8px;">No Research Blocks Added Yet</h3>
+          <p style="font-size:13px; color:var(--text-dim); max-width:480px; margin:0 auto 16px;">
+            Be the first to publish research, PDF attachments, Q&A defense cards, or key metrics for this executive seat.
+          </p>
+          <button class="add-block-btn" style="margin:0 auto;" type="button" onclick="openAddModal()">+ Add Content Block</button>
+        </div>
+      `;
+      return;
+    }
+
+    // Render Blocks sorted by timestamp
+    keys.sort((a, b) => (blocksObj[b].timestamp || 0) - (blocksObj[a].timestamp || 0));
+
+    keys.forEach(key => {
+      const b = blocksObj[key];
+      const blockDiv = document.createElement('div');
+      blockDiv.className = 'hub-block';
+
+      const actionsHtml = `
+        <div class="block-actions">
+          <button class="block-edit-btn" type="button" onclick="editBlock('${key}')">✏️ Edit</button>
+          <button class="block-del-btn" type="button" onclick="openDeleteModal('${key}')" title="Delete block">🗑️ Delete</button>
+        </div>
+      `;
+
+      let html = '';
+      if (b.type === 'ps') {
+        html = `
+          <div class="block-top">
+            <span class="block-badge ps">⚡ Problem → Solution Pair</span>
+            ${actionsHtml}
+          </div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-size:17px; margin:0 0 12px; color:var(--text);">${escapeHtml(b.title)}</h3>
+          <div class="solution-grid-2">
+            <div class="sol-box ch"><div class="sol-box-title">NVIDIA Challenge</div><p>${escapeHtml(b.body)}</p></div>
+            <div class="sol-box sol"><div class="sol-box-title">AWS Solution</div><p>${escapeHtml(b.extra || '')}</p></div>
+          </div>
+        `;
+      } else if (b.type === 'qa') {
+        html = `
+          <div class="block-top">
+            <span class="block-badge qa">❓ Q&A Rapid-Fire Defense</span>
+            ${actionsHtml}
+          </div>
+          <h4 style="font-family:'Space Grotesk',sans-serif; font-size:16px; margin:0 0 8px; color:var(--aws-orange);">Q: ${escapeHtml(b.title)}</h4>
+          <div class="sol-box sol"><div class="sol-box-title">90-Second Defensible Answer</div><p>${escapeHtml(b.body)}</p></div>
+        `;
+      } else if (b.type === 'pdf') {
+        html = `
+          <div class="block-top">
+            <span class="block-badge pdf">📄 PDF / Document Link</span>
+            ${actionsHtml}
+          </div>
+          <div class="doc-link-card">
+            <div>
+              <h4 style="font-family:'Space Grotesk',sans-serif; font-size:15px; margin:0 0 4px; color:var(--text);">${escapeHtml(b.title)}</h4>
+              <p style="font-size:12.5px; color:var(--text-dim); margin:0;">${escapeHtml(b.body)}</p>
+            </div>
+            ${b.extra ? `<a href="${escapeHtml(b.extra)}" target="_blank" rel="noopener">Open Document ↗</a>` : ''}
+          </div>
+        `;
+      } else if (b.type === 'metric') {
+        html = `
+          <div class="block-top">
+            <span class="block-badge metric">📊 Key Metric / Stat Card</span>
+            ${actionsHtml}
+          </div>
+          <div class="stat-metric-wrap">
+            <div class="stat-metric-val">${escapeHtml(b.title)}</div>
+            <div>
+              <div class="stat-metric-lbl">${escapeHtml(b.body)}</div>
+              <div style="font-size:12.5px; color:var(--text-dim);">${escapeHtml(b.extra || '')}</div>
+            </div>
+          </div>
+        `;
+      } else if (b.type === 'quote') {
+        html = `
+          <div class="block-top">
+            <span class="block-badge">💡 Executive Quote / Highlight</span>
+            ${actionsHtml}
+          </div>
+          <div class="quote-block" style="margin:0;">
+            "${escapeHtml(b.title)}"
+          </div>
+          ${b.body ? `<p style="font-size:13px; color:var(--text-dim); margin-top:8px;">${escapeHtml(b.body)}</p>` : ''}
+        `;
+      } else {
+        // default text block
+        html = `
+          <div class="block-top">
+            <span class="block-badge">📝 Analysis Note</span>
+            ${actionsHtml}
+          </div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-size:17px; margin:0 0 8px; color:var(--text);">${escapeHtml(b.title)}</h3>
+          <p style="font-size:13.5px; line-height:1.6; color:#C6CDD6; margin:0; whitespace:pre-wrap;">${escapeHtml(b.body)}</p>
+        `;
+      }
+
+      blockDiv.innerHTML = html;
+      canvasEl.appendChild(blockDiv);
+    });
+  }
+
+  function escapeHtml(str){
+    if (!str) return '';
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
+
+  // Modal Drag and Drop PDF Handling
+  modalDropzone.addEventListener('click', () => fileInput.click());
+
+  ['dragenter', 'dragover'].forEach(eventName => {
+    modalDropzone.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      modalDropzone.classList.add('dragover');
+    }, false);
+  });
+
+  ['dragleave', 'drop'].forEach(eventName => {
+    modalDropzone.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      modalDropzone.classList.remove('dragover');
+    }, false);
+  });
+
+  modalDropzone.addEventListener('drop', (e) => {
+    const dt = e.dataTransfer;
+    const files = dt.files;
+    handleModalPdf(files);
+  });
+
+  fileInput.addEventListener('change', () => {
+    handleModalPdf(fileInput.files);
+  });
+
+  function handleModalPdf(files){
+    if (!files || !files.length) return;
+    const file = files[0];
+    if (file.type !== 'application/pdf' && !file.name.endsWith('.pdf')) {
+      alert('Please select or drop a PDF document (.pdf)');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      uploadedPdfDataUrl = e.target.result;
+      const fileSizeMb = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+      
+      dzStatusTitle.textContent = '✓ Attached: ' + file.name;
+      dzStatusTitle.style.color = 'var(--nv-green)';
+      
+      document.getElementById('inp-title').value = file.name;
+      document.getElementById('inp-body').value = 'Uploaded PDF Research Document (' + fileSizeMb + ')';
+      document.getElementById('inp-extra').value = uploadedPdfDataUrl;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Modal Controls
+  window.openAddModal = function(){
+    editingBlockIdEl.value = '';
+    modalHeading.textContent = 'Add Research Block';
+    submitBlockBtn.textContent = 'Publish Block';
+    document.getElementById('block-form').reset();
+    blockTypeEl.value = 'text';
+    updateFormFieldsForType('text');
+    modalEl.classList.add('open');
+  };
+
+  document.getElementById('open-modal-btn').addEventListener('click', openAddModal);
+  document.getElementById('close-modal-btn').addEventListener('click', () => modalEl.classList.remove('open'));
+
+  blockTypeEl.addEventListener('change', () => updateFormFieldsForType(blockTypeEl.value));
+
+  function updateFormFieldsForType(val){
+    fieldExtra.style.display = 'none';
+    fieldDropzone.style.display = 'none';
+    uploadedPdfDataUrl = '';
+    dzStatusTitle.textContent = 'Drag & Drop PDF File Here';
+    dzStatusTitle.style.color = 'var(--text)';
+
+    if (val === 'ps') {
+      lblTitle.textContent = 'Headline / Initiative Name';
+      lblBody.textContent = 'NVIDIA Challenge / Pain Point';
+      lblExtra.textContent = 'AWS Solution / Response';
+      fieldExtra.style.display = 'block';
+    } else if (val === 'qa') {
+      lblTitle.textContent = 'Anticipated Question';
+      lblBody.textContent = '90-Second Defensible Answer';
+    } else if (val === 'pdf') {
+      lblTitle.textContent = 'Document / Paper Title';
+      lblBody.textContent = 'Brief Summary of Document';
+      lblExtra.textContent = 'Document Link / Data URL';
+      fieldExtra.style.display = 'block';
+      fieldDropzone.style.display = 'block';
+    } else if (val === 'metric') {
+      lblTitle.textContent = 'Metric Value (e.g., 30% TCO, 20 Pflops)';
+      lblBody.textContent = 'Metric Label / Description';
+      lblExtra.textContent = 'Context / Benchmark Note';
+      fieldExtra.style.display = 'block';
+    } else if (val === 'quote') {
+      lblTitle.textContent = 'Executive Statement / Quote';
+      lblBody.textContent = 'Additional Context (Optional)';
+    } else {
+      lblTitle.textContent = 'Analysis Headline';
+      lblBody.textContent = 'Detailed Content / Notes';
+    }
+  }
+
+  // Edit Existing Block
+  window.editBlock = function(blockKey){
+    const fbBlocks = (seatDataCache[activeSeat] || {}).blocks || {};
+    const localBlocks = getLocalBlocks(activeSeat);
+    const block = fbBlocks[blockKey] || localBlocks[blockKey];
+
+    if (!block) return;
+
+    editingBlockIdEl.value = blockKey;
+    modalHeading.textContent = 'Edit Research Block';
+    submitBlockBtn.textContent = 'Save Changes';
+
+    blockTypeEl.value = block.type || 'text';
+    updateFormFieldsForType(block.type || 'text');
+
+    document.getElementById('inp-title').value = block.title || '';
+    document.getElementById('inp-body').value = block.body || '';
+    document.getElementById('inp-extra').value = block.extra || '';
+
+    modalEl.classList.add('open');
+  };
+
+  // Form Submit Handler (Create or Edit)
+  document.getElementById('block-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const editingId = editingBlockIdEl.value;
+    const type = blockTypeEl.value;
+    const title = document.getElementById('inp-title').value.trim();
+    const body = document.getElementById('inp-body').value.trim();
+    const extra = document.getElementById('inp-extra').value.trim();
+
+    if (!title) {
+      alert("Please enter a Title / Headline for the block.");
+      return;
+    }
+
+    const blockId = editingId || ('blk_' + Date.now());
+    const blockData = { type, title, body, extra, timestamp: Date.now() };
+
+    // 1. Save to Local Storage
+    const localBlocks = getLocalBlocks(activeSeat);
+    localBlocks[blockId] = blockData;
+    setLocalBlocks(activeSeat, localBlocks);
+
+    // 2. Push to Firebase
+    if (db) {
+      db.ref('seats/' + activeSeat + '/blocks/' + blockId).set(blockData).catch((err) => {
+        console.warn("Firebase save warning:", err);
+      });
+    }
+
+    // 3. Reset form & close modal
+    modalEl.classList.remove('open');
+    document.getElementById('block-form').reset();
+    editingBlockIdEl.value = '';
+    fieldExtra.style.display = 'none';
+    fieldDropzone.style.display = 'none';
+
+    // 4. Update UI instantly
+    updateActiveSeatView();
+  });
+
+  // Custom Delete Modal Handling
+  window.openDeleteModal = function(blockKey){
+    pendingDeleteKey = blockKey;
+    confirmModalEl.classList.add('open');
+  };
+
+  document.getElementById('cancel-delete-btn').addEventListener('click', () => {
+    pendingDeleteKey = null;
+    confirmModalEl.classList.remove('open');
+  });
+
+  document.getElementById('confirm-delete-btn').addEventListener('click', () => {
+    if (!pendingDeleteKey) return;
+    const key = pendingDeleteKey;
+
+    // Delete from LocalStorage
+    const localBlocks = getLocalBlocks(activeSeat);
+    if (localBlocks[key]) {
+      delete localBlocks[key];
+      setLocalBlocks(activeSeat, localBlocks);
+    }
+
+    // Delete from Firebase
+    if (db) {
+      db.ref('seats/' + activeSeat + '/blocks/' + key).remove().catch(() => {});
+    }
+
+    pendingDeleteKey = null;
+    confirmModalEl.classList.remove('open');
+    updateActiveSeatView();
+  });
+
+  // Firebase Realtime Listener
+  try {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+
+    db.ref('.info/connected').on('value', (snap) => {
+      if (snap.val() === true) setSync('ok', 'Live — research syncs instantly for all team members');
+      else setSync('err', 'Offline — reconnecting…');
+    });
+
+    Object.keys(SEATS_INFO).forEach(seat => {
+      db.ref('seats/' + seat).on('value', (snap) => {
+        const val = snap.val() || {};
+        seatDataCache[seat] = val;
+        if (seat === activeSeat) updateActiveSeatView();
+      });
+    });
+  } catch(err) {
+    setSync('err', 'Running in local storage mode');
+    console.error(err);
+  }
+
+  // Initial load
+  updateActiveSeatView();
+</script>
+
+</body>
+</html>
