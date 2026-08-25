@@ -9,6 +9,7 @@
 <body>
 
 <nav class="site-nav">
+  <button class="mobile-menu-btn" id="open-drawer-btn" type="button" aria-label="Open navigation menu">⋮</button>
   <a href="index.html" class="brand"><span class="dot"></span>AWS <span class="orange">×</span> NVIDIA</a>
   <div class="nav-links">
     <a href="index.html">Overview</a>
@@ -370,6 +371,41 @@
   <span>AWS × NVIDIA BID PROGRAM</span>
   <span>EXECUTION FRAMEWORK</span>
 </footer>
+
+<!-- MOBILE SIDE NAVIGATION DRAWER -->
+<div class="mobile-drawer-overlay" id="mobile-drawer-overlay">
+  <div class="mobile-drawer">
+    <div class="mobile-drawer-head">
+      <a href="index.html" class="brand"><span class="dot"></span>AWS <span class="orange">×</span> NVIDIA</a>
+      <button class="mobile-drawer-close" id="close-drawer-btn">✕</button>
+    </div>
+    <div class="mobile-drawer-links">
+      <a href="index.html"><span>Overview</span> <span>→</span></a>
+      <a href="handbook.html"><span>Handbook</span> <span>→</span></a>
+      <a href="solutions.html"><span>Solutions</span> <span>→</span></a>
+      <a href="framework.html" class="active"><span>Framework</span> <span>→</span></a>
+      <a href="hub.html"><span>Research Hub</span> <span>→</span></a>
+      <a href="roster.html"><span>Team Roster</span> <span>→</span></a>
+    </div>
+    <div class="mobile-drawer-footer">
+      AWS × NVIDIA $200M Strategic Bid
+    </div>
+  </div>
+</div>
+
+<script>
+  (function(){
+    const openBtn = document.getElementById('open-drawer-btn');
+    const closeBtn = document.getElementById('close-drawer-btn');
+    const overlay = document.getElementById('mobile-drawer-overlay');
+    if (!openBtn || !overlay) return;
+    openBtn.addEventListener('click', () => overlay.classList.add('open'));
+    if (closeBtn) closeBtn.addEventListener('click', () => overlay.classList.remove('open'));
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.classList.remove('open');
+    });
+  })();
+</script>
 
 </body>
 </html>
