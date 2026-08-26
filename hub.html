@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Research & Intelligence Hub — AWS × NVIDIA</title>
+<meta name="description" content="AWS × NVIDIA $200M Strategic Bid — Real-time Executive Research & Intelligence Hub.">
 <link rel="stylesheet" href="styles.css">
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -27,8 +28,8 @@
 
   <header>
     <div class="eyebrow"><span class="dot"></span>EXECUTIVE INTELLIGENCE HUB</div>
-    <h1>Executive Research Canvas &<br><span class="green">Real-time Intelligence</span></h1>
-    <p class="sub">Select an executive seat to view, edit, or publish role-specific research, PDF whitepapers, Q&A defense statements, and key financial/technical metrics. Every block added or edited updates in real time for the whole team.</p>
+    <h1>Executive Research Canvas &amp;<br><span class="green">Real-time Intelligence</span></h1>
+    <p class="sub">Select an executive seat to view, edit, or publish role-specific research, PDF whitepapers, Q&amp;A defense statements, and key financial/technical metrics. Every block added or edited updates in real time for the whole team.</p>
 
     <div class="sync-note" style="margin-top:14px;">
       <span class="sync-dot" id="sync-dot"></span>
@@ -38,16 +39,16 @@
     <!-- 10 SEAT TABS -->
     <div class="hub-tabs-wrap">
       <div class="hub-tabs" id="seat-tabs">
-        <button class="hub-tab-btn active" data-seat="01">👑 01 CEO</button>
-        <button class="hub-tab-btn" data-seat="02">💻 02 CTO</button>
-        <button class="hub-tab-btn" data-seat="03">💰 03 CFO</button>
-        <button class="hub-tab-btn" data-seat="04">📢 04 CMO</button>
-        <button class="hub-tab-btn" data-seat="05">👥 05 CHRO</button>
-        <button class="hub-tab-btn" data-seat="06">🏭 06 COO</button>
-        <button class="hub-tab-btn" data-seat="07">🧠 07 Strategy</button>
-        <button class="hub-tab-btn" data-seat="08">🔬 08 R&D</button>
-        <button class="hub-tab-btn" data-seat="09">⚖️ 09 Legal</button>
-        <button class="hub-tab-btn" data-seat="10">🤝 10 CX</button>
+        <button class="hub-tab-btn active" data-seat="01" type="button">👑 01 CEO</button>
+        <button class="hub-tab-btn" data-seat="02" type="button">💻 02 CTO</button>
+        <button class="hub-tab-btn" data-seat="03" type="button">💰 03 CFO</button>
+        <button class="hub-tab-btn" data-seat="04" type="button">📢 04 CMO</button>
+        <button class="hub-tab-btn" data-seat="05" type="button">👥 05 CHRO</button>
+        <button class="hub-tab-btn" data-seat="06" type="button">🏭 06 COO</button>
+        <button class="hub-tab-btn" data-seat="07" type="button">🧠 07 Strategy</button>
+        <button class="hub-tab-btn" data-seat="08" type="button">🔬 08 R&amp;D</button>
+        <button class="hub-tab-btn" data-seat="09" type="button">⚖️ 09 Legal</button>
+        <button class="hub-tab-btn" data-seat="10" type="button">🤝 10 CX</button>
       </div>
     </div>
   </header>
@@ -78,11 +79,11 @@
       <input type="hidden" id="editing-block-id" value="">
 
       <div class="modal-field">
-        <label>Select Block Type</label>
+        <label for="block-type">Select Block Type</label>
         <select id="block-type" required>
           <option value="text">📝 Text / Analysis Note</option>
           <option value="ps">⚡ Problem → Solution Pair</option>
-          <option value="qa">❓ Q&A Rapid-Fire Defense</option>
+          <option value="qa">❓ Q&amp;A Rapid-Fire Defense</option>
           <option value="pdf">📄 PDF / Document Link Embed</option>
           <option value="metric">📊 Key Metric / Stat Card</option>
           <option value="quote">💡 Executive Quote / Key Takeaway</option>
@@ -91,27 +92,27 @@
 
       <!-- DRAG & DROP ZONE INSIDE MODAL FOR PDF TYPE -->
       <div class="modal-field" id="field-dropzone" style="display:none;">
-        <label>Drag & Drop PDF Document File</label>
+        <label>Drag &amp; Drop PDF Document File</label>
         <div class="drop-zone" id="modal-pdf-dropzone" style="margin-top:4px; padding:18px;">
           <div class="dz-icon" style="font-size:22px;">📄 📂</div>
-          <div class="dz-title" style="font-size:13.5px;" id="dz-status-title">Drag & Drop PDF File Here</div>
+          <div class="dz-title" style="font-size:13.5px;" id="dz-status-title">Drag &amp; Drop PDF File Here</div>
           <div class="dz-sub" style="font-size:11.5px;">or click to select PDF file from device</div>
           <input type="file" id="pdf-file-input" accept=".pdf,application/pdf" style="display:none;">
         </div>
       </div>
 
       <div class="modal-field">
-        <label id="lbl-title">Title / Headline</label>
+        <label id="lbl-title" for="inp-title">Title / Headline</label>
         <input type="text" id="inp-title" placeholder="e.g. EC2 UltraCluster EFA Latency Benchmark" required autocomplete="off">
       </div>
 
       <div class="modal-field" id="field-body">
-        <label id="lbl-body">Content Body / Detailed Analysis</label>
+        <label id="lbl-body" for="inp-body">Content Body / Detailed Analysis</label>
         <textarea id="inp-body" placeholder="Describe the findings, benchmarks, or implementation details..."></textarea>
       </div>
 
       <div class="modal-field" id="field-extra" style="display:none;">
-        <label id="lbl-extra">Extra Detail / Link URL</label>
+        <label id="lbl-extra" for="inp-extra">Extra Detail / Link URL</label>
         <input type="text" id="inp-extra" placeholder="https://..." autocomplete="off">
       </div>
 
@@ -138,7 +139,7 @@
 
 <footer class="site-footer">
   <span>AWS × NVIDIA BID PROGRAM</span>
-  <span>RESEARCH & INTELLIGENCE HUB</span>
+  <span>RESEARCH &amp; INTELLIGENCE HUB</span>
 </footer>
 
 <script>
@@ -168,6 +169,7 @@
   let activeSeat = '01';
   let db = null;
   let seatDataCache = {};
+  let isFirebaseConnected = false;
   let uploadedPdfDataUrl = '';
   let pendingDeleteKey = null;
 
@@ -215,7 +217,7 @@
 
   function setLocalBlocks(seat, blocks){
     try {
-      localStorage.setItem('roster-blocks-' + seat, JSON.stringify(blocks));
+      localStorage.setItem('roster-blocks-' + seat, JSON.stringify(blocks || {}));
     } catch(e) {}
   }
 
@@ -226,24 +228,31 @@
     document.getElementById('active-title').textContent = info.role;
     document.getElementById('active-assigned').textContent = assignedName;
 
-    // Merge Firebase blocks + Local Storage blocks
-    const fbBlocks = fbData.blocks || {};
-    const localBlocks = getLocalBlocks(activeSeat);
-    const combinedBlocks = Object.assign({}, fbBlocks, localBlocks);
+    let blocksToRender = {};
 
-    renderCanvasBlocks(combinedBlocks);
+    if (isFirebaseConnected) {
+      // Firebase is connected: Firebase is 100% the primary source of truth
+      blocksToRender = fbData.blocks || {};
+      // Overwrite local storage to sync additions AND deletions
+      setLocalBlocks(activeSeat, blocksToRender);
+    } else {
+      // Fallback for offline mode only
+      blocksToRender = getLocalBlocks(activeSeat);
+    }
+
+    renderCanvasBlocks(blocksToRender);
   }
 
   function renderCanvasBlocks(blocksObj){
     canvasEl.innerHTML = '';
-    const keys = Object.keys(blocksObj);
+    const keys = Object.keys(blocksObj || {});
 
     if (keys.length === 0) {
       canvasEl.innerHTML = `
         <div class="solution-block" style="text-align:center; padding:40px 20px;">
           <h3 style="font-family:'Space Grotesk',sans-serif; color:var(--text-dim); margin-bottom:8px;">No Research Blocks Added Yet</h3>
           <p style="font-size:13px; color:var(--text-dim); max-width:480px; margin:0 auto 16px;">
-            Be the first to publish research, PDF attachments, Q&A defense cards, or key metrics for this executive seat.
+            Be the first to publish research, PDF attachments, Q&amp;A defense cards, or key metrics for this executive seat.
           </p>
           <button class="add-block-btn" style="margin:0 auto;" type="button" onclick="openAddModal()">+ Add Content Block</button>
         </div>
@@ -256,6 +265,7 @@
 
     keys.forEach(key => {
       const b = blocksObj[key];
+      if (!b) return;
       const blockDiv = document.createElement('div');
       blockDiv.className = 'hub-block';
 
@@ -282,13 +292,19 @@
       } else if (b.type === 'qa') {
         html = `
           <div class="block-top">
-            <span class="block-badge qa">❓ Q&A Rapid-Fire Defense</span>
+            <span class="block-badge qa">❓ Q&amp;A Rapid-Fire Defense</span>
             ${actionsHtml}
           </div>
           <h4 style="font-family:'Space Grotesk',sans-serif; font-size:16px; margin:0 0 8px; color:var(--aws-orange);">Q: ${escapeHtml(b.title)}</h4>
           <div class="sol-box sol"><div class="sol-box-title">90-Second Defensible Answer</div><p>${escapeHtml(b.body)}</p></div>
         `;
       } else if (b.type === 'pdf') {
+        let pdfLinkHtml = '';
+        if (b.extra && (b.extra.startsWith('http') || b.extra.startsWith('data:'))) {
+          pdfLinkHtml = `<a href="${escapeHtml(b.extra)}" target="_blank" rel="noopener">Open Document ↗</a>`;
+        } else if (b.extra) {
+          pdfLinkHtml = `<span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--nv-green); background:rgba(118,185,0,0.1); padding:4px 10px; border-radius:6px; border:1px solid rgba(118,185,0,0.25);">📄 Document Attached</span>`;
+        }
         html = `
           <div class="block-top">
             <span class="block-badge pdf">📄 PDF / Document Link</span>
@@ -299,7 +315,7 @@
               <h4 style="font-family:'Space Grotesk',sans-serif; font-size:15px; margin:0 0 4px; color:var(--text);">${escapeHtml(b.title)}</h4>
               <p style="font-size:12.5px; color:var(--text-dim); margin:0;">${escapeHtml(b.body)}</p>
             </div>
-            ${b.extra ? `<a href="${escapeHtml(b.extra)}" target="_blank" rel="noopener">Open Document ↗</a>` : ''}
+            ${pdfLinkHtml}
           </div>
         `;
       } else if (b.type === 'metric') {
@@ -328,14 +344,13 @@
           ${b.body ? `<p style="font-size:13px; color:var(--text-dim); margin-top:8px;">${escapeHtml(b.body)}</p>` : ''}
         `;
       } else {
-        // default text block
         html = `
           <div class="block-top">
             <span class="block-badge">📝 Analysis Note</span>
             ${actionsHtml}
           </div>
           <h3 style="font-family:'Space Grotesk',sans-serif; font-size:17px; margin:0 0 8px; color:var(--text);">${escapeHtml(b.title)}</h3>
-          <p style="font-size:13.5px; line-height:1.6; color:#C6CDD6; margin:0; whitespace:pre-wrap;">${escapeHtml(b.body)}</p>
+          <p style="font-size:13.5px; line-height:1.6; color:#C6CDD6; margin:0; white-space:pre-wrap;">${escapeHtml(b.body)}</p>
         `;
       }
 
@@ -388,9 +403,14 @@
 
     const reader = new FileReader();
     reader.onload = function(e) {
-      uploadedPdfDataUrl = e.target.result;
       const fileSizeMb = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
       
+      if (file.size <= 250 * 1024) {
+        uploadedPdfDataUrl = e.target.result;
+      } else {
+        uploadedPdfDataUrl = "PDF Attachment: " + file.name + " (" + fileSizeMb + ")";
+      }
+
       dzStatusTitle.textContent = '✓ Attached: ' + file.name;
       dzStatusTitle.style.color = 'var(--nv-green)';
       
@@ -401,28 +421,39 @@
     reader.readAsDataURL(file);
   }
 
+  function resetModalState(){
+    editingBlockIdEl.value = '';
+    document.getElementById('block-form').reset();
+    fieldExtra.style.display = 'none';
+    fieldDropzone.style.display = 'none';
+    uploadedPdfDataUrl = '';
+    dzStatusTitle.textContent = 'Drag & Drop PDF File Here';
+    dzStatusTitle.style.color = 'var(--text)';
+  }
+
   // Modal Controls
   window.openAddModal = function(){
-    editingBlockIdEl.value = '';
+    resetModalState();
     modalHeading.textContent = 'Add Research Block';
     submitBlockBtn.textContent = 'Publish Block';
-    document.getElementById('block-form').reset();
     blockTypeEl.value = 'text';
     updateFormFieldsForType('text');
     modalEl.classList.add('open');
   };
 
+  function closeModal(){
+    modalEl.classList.remove('open');
+    resetModalState();
+  }
+
   document.getElementById('open-modal-btn').addEventListener('click', openAddModal);
-  document.getElementById('close-modal-btn').addEventListener('click', () => modalEl.classList.remove('open'));
+  document.getElementById('close-modal-btn').addEventListener('click', closeModal);
 
   blockTypeEl.addEventListener('change', () => updateFormFieldsForType(blockTypeEl.value));
 
   function updateFormFieldsForType(val){
     fieldExtra.style.display = 'none';
     fieldDropzone.style.display = 'none';
-    uploadedPdfDataUrl = '';
-    dzStatusTitle.textContent = 'Drag & Drop PDF File Here';
-    dzStatusTitle.style.color = 'var(--text)';
 
     if (val === 'ps') {
       lblTitle.textContent = 'Headline / Initiative Name';
@@ -460,6 +491,7 @@
 
     if (!block) return;
 
+    resetModalState();
     editingBlockIdEl.value = blockKey;
     modalHeading.textContent = 'Edit Research Block';
     submitBlockBtn.textContent = 'Save Changes';
@@ -491,26 +523,35 @@
     const blockId = editingId || ('blk_' + Date.now());
     const blockData = { type, title, body, extra, timestamp: Date.now() };
 
-    // 1. Save to Local Storage
-    const localBlocks = getLocalBlocks(activeSeat);
-    localBlocks[blockId] = blockData;
-    setLocalBlocks(activeSeat, localBlocks);
-
-    // 2. Push to Firebase
+    // 1. Always push directly to Firebase Realtime Database first
     if (db) {
-      db.ref('seats/' + activeSeat + '/blocks/' + blockId).set(blockData).catch((err) => {
-        console.warn("Firebase save warning:", err);
-      });
+      setSync('err', 'Publishing block to live team database...');
+
+      // Optimistic local cache update for instant UI feedback
+      if (!seatDataCache[activeSeat]) seatDataCache[activeSeat] = {};
+      if (!seatDataCache[activeSeat].blocks) seatDataCache[activeSeat].blocks = {};
+      const backupBlocks = Object.assign({}, seatDataCache[activeSeat].blocks);
+      seatDataCache[activeSeat].blocks[blockId] = blockData;
+
+      db.ref('seats/' + activeSeat + '/blocks/' + blockId).set(blockData)
+        .then(() => {
+          setSync('ok', 'Live — research syncs instantly for all team members');
+        })
+        .catch((err) => {
+          console.error("Firebase sync error:", err);
+          // Revert optimistic update on error
+          seatDataCache[activeSeat].blocks = backupBlocks;
+          updateActiveSeatView();
+          alert("Firebase Sync Failed (" + (err.code || 'ERROR') + "): " + err.message + "\n\nPlease ensure your Firebase Database Rules allow read/write for seats/$seat/blocks.");
+        });
+    } else {
+      const localBlocks = getLocalBlocks(activeSeat);
+      localBlocks[blockId] = blockData;
+      setLocalBlocks(activeSeat, localBlocks);
+      setSync('err', 'Saved locally (Offline mode)');
     }
 
-    // 3. Reset form & close modal
-    modalEl.classList.remove('open');
-    document.getElementById('block-form').reset();
-    editingBlockIdEl.value = '';
-    fieldExtra.style.display = 'none';
-    fieldDropzone.style.display = 'none';
-
-    // 4. Update UI instantly
+    closeModal();
     updateActiveSeatView();
   });
 
@@ -529,6 +570,15 @@
     if (!pendingDeleteKey) return;
     const key = pendingDeleteKey;
 
+    // Backup current blocks before delete
+    const currentBlocks = (seatDataCache[activeSeat] && seatDataCache[activeSeat].blocks) ? Object.assign({}, seatDataCache[activeSeat].blocks) : {};
+    const deletedBlockData = currentBlocks[key];
+
+    // Optimistic delete from local cache for zero-delay UI response
+    if (seatDataCache[activeSeat] && seatDataCache[activeSeat].blocks) {
+      delete seatDataCache[activeSeat].blocks[key];
+    }
+
     // Delete from LocalStorage
     const localBlocks = getLocalBlocks(activeSeat);
     if (localBlocks[key]) {
@@ -536,14 +586,38 @@
       setLocalBlocks(activeSeat, localBlocks);
     }
 
-    // Delete from Firebase
+    // Delete from Firebase using set(null) which is universally supported
     if (db) {
-      db.ref('seats/' + activeSeat + '/blocks/' + key).remove().catch(() => {});
+      setSync('err', 'Deleting block from live database...');
+      db.ref('seats/' + activeSeat + '/blocks/' + key).set(null)
+        .then(() => {
+          setSync('ok', 'Live — block deleted for all team members');
+        })
+        .catch((err) => {
+          console.error("Firebase delete error:", err);
+          // Revert optimistic delete if Firebase denied write
+          if (!seatDataCache[activeSeat]) seatDataCache[activeSeat] = {};
+          if (!seatDataCache[activeSeat].blocks) seatDataCache[activeSeat].blocks = {};
+          if (deletedBlockData) seatDataCache[activeSeat].blocks[key] = deletedBlockData;
+          updateActiveSeatView();
+          alert("Firebase Delete Failed (" + (err.code || 'PERMISSION_DENIED') + "): " + err.message + "\n\nPlease ensure your Firebase Rules allow '.write': true under seats/$seat/blocks.");
+        });
     }
 
     pendingDeleteKey = null;
     confirmModalEl.classList.remove('open');
     updateActiveSeatView();
+  });
+
+  // Keyboard Navigation (Escape key closes modals)
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (modalEl.classList.contains('open')) closeModal();
+      if (confirmModalEl.classList.contains('open')) {
+        pendingDeleteKey = null;
+        confirmModalEl.classList.remove('open');
+      }
+    }
   });
 
   // Firebase Realtime Listener
@@ -552,14 +626,53 @@
     db = firebase.database();
 
     db.ref('.info/connected').on('value', (snap) => {
-      if (snap.val() === true) setSync('ok', 'Live — research syncs instantly for all team members');
-      else setSync('err', 'Offline — reconnecting…');
+      if (snap.val() === true) {
+        isFirebaseConnected = true;
+        setSync('ok', 'Live — research syncs instantly for all team members');
+      } else {
+        isFirebaseConnected = false;
+        setSync('err', 'Offline — reconnecting…');
+      }
     });
 
     Object.keys(SEATS_INFO).forEach(seat => {
+      // Listen for seat metadata (name/locked)
       db.ref('seats/' + seat).on('value', (snap) => {
+        isFirebaseConnected = true;
         const val = snap.val() || {};
-        seatDataCache[seat] = val;
+        if (!seatDataCache[seat]) seatDataCache[seat] = {};
+        seatDataCache[seat].name = val.name;
+        seatDataCache[seat].locked = val.locked;
+        if (!seatDataCache[seat].blocks && val.blocks) {
+          seatDataCache[seat].blocks = val.blocks;
+        }
+        if (seat === activeSeat) updateActiveSeatView();
+      });
+
+      // Granular real-time listeners for instant sub-100ms block sync
+      const blocksRef = db.ref('seats/' + seat + '/blocks');
+
+      blocksRef.on('child_added', (snap) => {
+        isFirebaseConnected = true;
+        if (!seatDataCache[seat]) seatDataCache[seat] = {};
+        if (!seatDataCache[seat].blocks) seatDataCache[seat].blocks = {};
+        seatDataCache[seat].blocks[snap.key] = snap.val();
+        if (seat === activeSeat) updateActiveSeatView();
+      });
+
+      blocksRef.on('child_changed', (snap) => {
+        isFirebaseConnected = true;
+        if (!seatDataCache[seat]) seatDataCache[seat] = {};
+        if (!seatDataCache[seat].blocks) seatDataCache[seat].blocks = {};
+        seatDataCache[seat].blocks[snap.key] = snap.val();
+        if (seat === activeSeat) updateActiveSeatView();
+      });
+
+      blocksRef.on('child_removed', (snap) => {
+        isFirebaseConnected = true;
+        if (seatDataCache[seat] && seatDataCache[seat].blocks) {
+          delete seatDataCache[seat].blocks[snap.key];
+        }
         if (seat === activeSeat) updateActiveSeatView();
       });
     });
@@ -577,7 +690,7 @@
   <div class="mobile-drawer">
     <div class="mobile-drawer-head">
       <a href="index.html" class="brand"><span class="dot"></span>AWS <span class="orange">×</span> NVIDIA</a>
-      <button class="mobile-drawer-close" id="close-drawer-btn">✕</button>
+      <button class="mobile-drawer-close" id="close-drawer-btn" type="button">✕</button>
     </div>
     <div class="mobile-drawer-links">
       <a href="index.html"><span>Overview</span> <span>→</span></a>
